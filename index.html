@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subly+ Marketplace - Catálogo Completo</title>
+    <!-- Tailwind CDN for utility classes if needed, but sticking to custom CSS for aesthetic control -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg-subtle: #0a0a0a; /* Fondo muy oscuro, casi negro */
+            --dark-bg: #1a1a1a; /* Fondo primario del panel */
+            --dark-card: #1e1e1e; /* Fondo de las tarjetas de producto */
+            --dark-text: #f0f0f0; /* Texto principal brillante */
+            --dark-muted: #a0a0a0; /* Texto secundario/descripciones */
+            --accent-blue: #00C4FF; /* Electric Blue/Cyan - Nuevo acento moderno */
+            --accent-glow: 0 0 15px rgba(0, 196, 255, 0.4); /* Sombra de brillo para hover */
+            --accent-red: #dc3545;
+            --sidebar-width: 250px;
+            --header-height: 60px;
+            font-family: 'Inter', sans-serif;
+            color-scheme: dark;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--dark-bg-subtle);
+            color: var(--dark-text);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--dark-bg);
+            /* Efecto visual mejorado */
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(0);
+            z-index: 1000;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(calc(-1 * var(--sidebar-width)));
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 20px;
+            transition: margin-left 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content.expanded {
+            margin-left: 0;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            height: 40px;
+            filter: drop-shadow(0 0 5px rgba(0, 196, 255, 0.5));
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: var(--dark-muted);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: background-color 0.2s, color 0.2s, transform 0.1s;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background-color: rgba(0, 196, 255, 0.1); /* Fondo sutil de acento */
+            color: var(--accent-blue);
+            transform: translateX(5px);
+        }
+        .sidebar-nav a.active {
+            font-weight: 600;
+        }
+
+        .sidebar-nav a svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            text-align: center;
+        }
+        .sidebar-footer .contact, .sidebar-footer .social a {
+            color: var(--dark-muted);
+            text-decoration: none;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .sidebar-footer .social a:hover svg {
+            color: var(--accent-blue);
+        }
+
+        .header-top {
+            /* Efecto Glassmorphism sutil */
+            background-color: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            
+            padding: 15px 20px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: flex-start; /* Ajustado para que el toggle quede a la izquierda */
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Sombra más fuerte */
+            height: var(--header-height);
+        }
+        
+        .header-top .toggle-sidebar {
+            background: none;
+            border: none;
+            color: var(--dark-text);
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .header-top .toggle-sidebar:hover {
+            color: var(--accent-blue);
+        }
+
+        .content-area {
+            flex-grow: 1;
+            padding: 30px 0;
+        }
+
+        .breadcrumb {
+            color: var(--dark-muted);
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .breadcrumb span:last-child {
+            color: var(--dark-text);
+            font-weight: 500;
+        }
+
+        .shop-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px; /* Más espacio */
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .category-title {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--accent-blue);
+            margin: 30px 0 15px 0;
+            border-bottom: 2px solid rgba(0, 196, 255, 0.3);
+            padding-bottom: 5px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            background-color: var(--dark-card);
+            border: 1px solid #444;
+            padding: 12px 15px 12px 40px; /* Más padding vertical */
+            border-radius: 10px; /* Más redondeado */
+            color: var(--dark-text);
+            width: 280px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .search-box input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 5px rgba(0, 196, 255, 0.5);
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-muted);
+            width: 20px;
+            height: 20px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .filters select {
+            background-color: var(--dark-card);
+            border: 1px solid #444;
+            padding: 10px 15px; /* Más padding */
+            border-radius: 10px;
+            color: var(--dark-text);
+            outline: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23f0f0f0'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            padding-right: 35px;
+        }
+
+        .view-toggle button {
+            background: none;
+            border: 1px solid #444;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: var(--dark-text);
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .view-toggle button.active {
+            background-color: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: var(--dark-bg-subtle);
+        }
+        .view-toggle button:not(.active):hover {
+            background-color: #444;
+            border-color: #555;
+        }
+        .view-toggle button:first-child { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+        .view-toggle button:last-child { border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: -1px; }
+
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Tarjetas ligeramente más grandes */
+            gap: 30px; /* Más espacio entre tarjetas */
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background-color: var(--dark-card);
+            border-radius: 16px; /* Más redondeado */
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid transparent; /* Para el efecto de borde en hover */
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.02); /* Desplazamiento más notorio */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), var(--accent-glow);
+            border-color: var(--accent-blue);
+        }
+
+        .product-card .out-of-stock-label {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--accent-red);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            font-weight: 700;
+            z-index: 5;
+        }
+        .product-card .combo-label {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #ff8c00; /* Naranja para combos */
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            font-weight: 700;
+            z-index: 5;
+        }
+
+        .product-card .image-container {
+            width: 100%;
+            height: 180px; /* Altura ajustada */
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #333;
+        }
+        .product-card .logo-svg {
+            height: 80px;
+            width: auto;
+            max-width: 80%;
+        }
+
+        .product-info {
+            padding: 20px; /* Más padding */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-info h3 {
+            font-size: 1.2em;
+            margin: 0 0 5px;
+            color: var(--dark-text);
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        .product-info p.description {
+            font-size: 0.9em;
+            color: var(--dark-muted);
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .product-info .price {
+            font-size: 1.4em;
+            font-weight: 800;
+            color: var(--accent-blue); /* Precio en color de acento */
+            margin-bottom: 15px;
+        }
+
+        .product-info .action-btn {
+            background-color: var(--accent-blue);
+            color: var(--dark-bg);
+            padding: 12px 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 700;
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.1s;
+            box-shadow: 0 4px 10px rgba(0, 196, 255, 0.4);
+        }
+
+        .product-info .action-btn.disabled {
+            background-color: #555;
+            color: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .product-info .action-btn:not(.disabled):hover {
+            background-color: #00BFFF;
+            box-shadow: var(--accent-glow);
+            transform: translateY(-1px);
+        }
+        
+        /* Media Queries para Responsividad */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(calc(-1 * var(--sidebar-width)));
+                position: fixed;
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0; 
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                padding: 10px 15px;
+            }
+            .main-content {
+                padding: 15px;
+            }
+            .shop-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-box input {
+                width: 100%;
+            }
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .filters select, .view-toggle {
+                width: 100%;
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+            .product-card .image-container {
+                height: 160px;
+            }
+            .product-info h3 {
+                font-size: 1em;
+            }
+        }
+        /* Iconos de plataformas (SVG incrustado) */
+        .icon-appletv { fill: white; background-color: #000; padding: 10px; border-radius: 10px; }
+        .icon-paramount { fill: #00329c; background-color: #fff; padding: 10px; border-radius: 10px; }
+        .icon-crunchyroll { fill: #f48a06; background-color: #2b2b2b; padding: 10px; border-radius: 10px; }
+        .icon-disney { fill: #000; background-color: #02022d; padding: 10px; border-radius: 10px; }
+        .icon-youtube { fill: #ff0000; }
+        .icon-deezer { fill: #00c7e2; }
+        .icon-spotify { fill: #1ed760; }
+        .icon-apple-music { fill: #fa2139; }
+        .icon-chatgpt { fill: #10a37f; }
+        .icon-gemini { fill: white; background: linear-gradient(135deg, #4285F4, #34A853, #FBBC05, #EA4335); }
+        .icon-hbo-max { fill: #92278f; }
+        .icon-prime { fill: #00a8e1; }
+        .icon-universal { fill: #000; }
+        .icon-vix { fill: #ff0070; }
+        .icon-netflix { fill: #e50914; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="logo-container">
+            <!-- Logo Subly+ (Placeholder) -->
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMzAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCAxMzAgNDAiPgogIDxyZWN0IHdpZHRoPSIxMzAiIGhlaWdodD0iNDAiIHJ4PSI4IiBmaWxsPSIjMDAzMDRmIi8+CiAgPHRleHQgeD0iMTAiIHk9IjI3IiBmb250LWZhbWlseT0iSW50ZXIsIEFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjMDBDNFFFZiIgZm9udC13ZWlnaHQ9IjgwMCI+U1VCTFkrPC90ZXh0Pgo8L3N2Zz4=" alt="Logo Subly+ Marketplace" class="logo">
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="#" class="active"><svg><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Inicio</a></li>
+                <li><a href="#entretenimiento"><svg><path d="M22 17H2a3 3 0 0 0 0 6h20V17zM2 17V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12H2z"></path><line x1="12" y1="13" x2="12" y2="17"></line><line x1="6" y1="13" x2="6" y2="17"></line><line x1="18" y1="13" x2="18" y2="17"></line></svg>Entretenimiento</a></li>
+                <li><a href="#musica"><svg><circle cx="12" cy="12" r="10"></circle><path d="M9.5 16h5M12 8v8M12 16a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>Música</a></li>
+                <li><a href="#ia"><svg><circle cx="12" cy="12" r="10"></circle><path d="M12 17V7M9 10h6M9 14h6"/></svg>Inteligencia Artificial</a></li>
+                <li><a href="#combos"><svg><path d="M16 18l-4-4-4 4M12 14v4M22 2H2v20h20zM7 7h10M7 11h10"/></svg>Combos</a></li>
+                <li><a href="#"><svg><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Mi cuenta</a></li>
+                <li><a href="#"><svg><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>Log Out</a></li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="tel:+573183826283" class="contact">Escríbenos ahora<br><strong style="color: var(--accent-blue);">+57 3183826283</strong></a>
+            <div class="social">
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.5" y1="6.5" y2="6.5"/></svg></a>
+            </div>
+        </div>
+    </aside>
+
+    <div class="main-content" id="mainContent">
+        <header class="header-top">
+            <!-- Botón de toggle ahora solo a la izquierda -->
+            <button class="toggle-sidebar" id="toggleSidebar">☰</button>
+            <!-- Se ha eliminado el botón "RECARGAR SALDO" -->
+        </header>
+
+        <div class="content-area">
+            <div class="breadcrumb">
+                <span>HOME</span> / <span style="color: var(--accent-blue);">CATÁLOGO SUBLY+</span>
+            </div>
+
+            <div class="shop-header">
+                <div class="search-box">
+                    <input type="text" placeholder="Buscar producto o servicio...">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <div class="filters">
+                    <select>
+                        <option>Mostrar: Todos</option>
+                        <option>Mostrar: Streaming</option>
+                        <option>Mostrar: Música</option>
+                        <option>Mostrar: IA</option>
+                    </select>
+                    <div class="view-toggle">
+                        <button class="active">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-grid"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        </button>
+                        <button>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: ENTRETENIMIENTO -->
+            <h2 class="category-title" id="entretenimiento">🎬 ENTRETENIMIENTO</h2>
+            <div class="product-grid">
+                <!-- Apple TV+ -->
+                <div class="product-card">
+                    <div class="image-container">
+                        <!-- Apple TV+ Logo (Apple) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-appletv" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-1-8h2v5h-2zM12 7a1 1 0 1 0 1 1 1 1 0 0 0-1-1z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Apple TV+: Pantalla</h3>
+                        <p class="description">Acceso a 1 Pantalla de Apple TV+ por 1 mes.</p>
+                        <div class="price">$18.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-appletv" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-1-8h2v5h-2zM12 7a1 1 0 1 0 1 1 1 1 0 0 0-1-1z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Apple TV+: Pantalla</h3>
+                        <p class="description">Acceso a 1 Pantalla de Apple TV+ por 3 meses.</p>
+                        <div class="price">$79.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-appletv" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-1-8h2v5h-2zM12 7a1 1 0 1 0 1 1 1 1 0 0 0-1-1z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Apple TV+: Completa</h3>
+                        <p class="description">Cuenta completa de Apple TV+ por 1 mes.</p>
+                        <div class="price">$20.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+
+                <!-- Paramount+ -->
+                <div class="product-card">
+                    <div class="image-container">
+                        <!-- Paramount+ Logo (Mountain) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-paramount" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6L4 18h16zM12 5l-4 8h8zm0 0v10M12 18l-1.5-3M12 18l1.5-3M10 13h4M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Paramount+: Pantalla</h3>
+                        <p class="description">Acceso a 1 Pantalla de Paramount+ por 1 mes.</p>
+                        <div class="price">$10.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-paramount" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6L4 18h16zM12 5l-4 8h8zm0 0v10M12 18l-1.5-3M12 18l1.5-3M10 13h4M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Paramount+: Completa</h3>
+                        <p class="description">Cuenta completa de Paramount+ por 1 mes.</p>
+                        <div class="price">$15.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-paramount" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6L4 18h16zM12 5l-4 8h8zm0 0v10M12 18l-1.5-3M12 18l1.5-3M10 13h4M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Paramount+: Original Pantalla</h3>
+                        <p class="description">Pantalla original de Paramount+ por 1 mes.</p>
+                        <div class="price">$17.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-paramount" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6L4 18h16zM12 5l-4 8h8zm0 0v10M12 18l-1.5-3M12 18l1.5-3M10 13h4M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Paramount+: Original Completa</h3>
+                        <p class="description">Cuenta completa original de Paramount+ por 1 mes.</p>
+                        <div class="price">$18.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+
+                <!-- Crunchyroll -->
+                <div class="product-card">
+                    <div class="image-container">
+                        <!-- Crunchyroll Logo (C) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-crunchyroll" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-4-4a4 4 0 1 1 4-4 4 4 0 0 1-4 4z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Crunchyroll: Pantalla</h3>
+                        <p class="description">Acceso a una Pantalla de Crunchyroll por 1 mes.</p>
+                        <div class="price">$7.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-crunchyroll" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-4-4a4 4 0 1 1 4-4 4 4 0 0 1-4 4z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Crunchyroll: Completa</h3>
+                        <p class="description">Cuenta completa de Crunchyroll por 1 mes.</p>
+                        <div class="price">$13.500</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-crunchyroll" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-4-4a4 4 0 1 1 4-4 4 4 0 0 1-4 4z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Crunchyroll: Original Pantalla</h3>
+                        <p class="description">Pantalla original de Crunchyroll por 1 mes.</p>
+                        <div class="price">$11.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-crunchyroll" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-4-4a4 4 0 1 1 4-4 4 4 0 0 1-4 4z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Crunchyroll: Original Completa</h3>
+                        <p class="description">Cuenta completa original de Crunchyroll por 1 mes.</p>
+                        <div class="price">$13.600</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+
+                <!-- Disney+ -->
+                <div class="product-card">
+                    <div class="image-container">
+                        <!-- Disney+ Logo (Star) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-disney" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Disney+: Pantalla Original Estándar</h3>
+                        <p class="description">Pantalla estándar (Original) de Disney+ por 1 mes.</p>
+                        <div class="price">$15.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-disney" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Disney+: Completa Original Estándar</h3>
+                        <p class="description">Cuenta completa estándar (Original) de Disney+ por 1 mes.</p>
+                        <div class="price">$30.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-disney" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Disney+: Pantalla Premium Genérica</h3>
+                        <p class="description">Pantalla Premium (Genérica) de Disney+ por 1 mes.</p>
+                        <div class="price">$20.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-disney" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Disney+: Completa Premium Genérica</h3>
+                        <p class="description">Cuenta completa Premium (Genérica) de Disney+ por 1 mes.</p>
+                        <div class="price">$39.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-disney" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Disney+: Pantalla Premium Original</h3>
+                        <p class="description">Pantalla Premium (Original) de Disney+ por 1 mes.</p>
+                        <div class="price">$45.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-disney" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Disney+: Completa Premium Original</h3>
+                        <p class="description">Cuenta completa Premium (Original) de Disney+ por 1 mes.</p>
+                        <div class="price">$46.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: MÚSICA -->
+            <h2 class="category-title" id="musica">🎵 MÚSICA</h2>
+            <div class="product-grid">
+                <!-- YouTube Premium -->
+                <div class="product-card">
+                    <div class="image-container">
+                        <!-- YouTube Premium Logo (Play Button) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-youtube" viewBox="0 0 24 24" fill="currentColor"><path d="M21.84 6.54a2.89 2.89 0 0 0-2.07-2.07C18 4 12 4 12 4s-6 0-7.77.47a2.89 2.89 0 0 0-2.07 2.07C2 8.35 2 12 2 12s0 3.65.47 5.46a2.89 2.89 0 0 0 2.07 2.07C6 20 12 20 12 20s6 0 7.77-.47a2.89 2.89 0 0 0 2.07-2.07c.47-1.81.47-5.46.47-5.46s0-3.65-.47-5.46zM9.54 15.3l5.09-3.3-5.09-3.3z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>YouTube Premium: 1 Mes</h3>
+                        <p class="description">Acceso a YouTube Premium por 1 mes.</p>
+                        <div class="price">$10.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-youtube" viewBox="0 0 24 24" fill="currentColor"><path d="M21.84 6.54a2.89 2.89 0 0 0-2.07-2.07C18 4 12 4 12 4s-6 0-7.77.47a2.89 2.89 0 0 0-2.07 2.07C2 8.35 2 12 2 12s0 3.65.47 5.46a2.89 2.89 0 0 0 2.07 2.07C6 20 12 20 12 20s6 0 7.77-.47a2.89 2.89 0 0 0 2.07-2.07c.47-1.81.47-5.46.47-5.46s0-3.65-.47-5.46zM9.54 15.3l5.09-3.3-5.09-3.3z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>YouTube Premium: 3 Meses</h3>
+                        <p class="description">Acceso a YouTube Premium por 3 meses.</p>
+                        <div class="price">$30.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-youtube" viewBox="0 0 24 24" fill="currentColor"><path d="M21.84 6.54a2.89 2.89 0 0 0-2.07-2.07C18 4 12 4 12 4s-6 0-7.77.47a2.89 2.89 0 0 0-2.07 2.07C2 8.35 2 12 2 12s0 3.65.47 5.46a2.89 2.89 0 0 0 2.07 2.07C6 20 12 20 12 20s6 0 7.77-.47a2.89 2.89 0 0 0 2.07-2.07c.47-1.81.47-5.46.47-5.46s0-3.65-.47-5.46zM9.54 15.3l5.09-3.3-5.09-3.3z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>YouTube Premium: 4 Meses</h3>
+                        <p class="description">Acceso a YouTube Premium por 4 meses.</p>
+                        <div class="price">$66.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+
+                <!-- Deezer Premium -->
+                <div class="product-card">
+                    <div class="image-container">
+                        <!-- Deezer Logo -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-deezer" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-4 4a2 2 0 1 1-2 2 2 2 0 0 1 2-2zm8 0a2 2 0 1 1-2 2 2 2 0 0 1 2-2zM6 16a2 2 0 1 1-2 2 2 2 0 0 1 2-2zm12 0a2 2 0 1 1-2 2 2 2 0 0 1 2-2zM12 10a2 2 0 1 1-2 2 2 2 0 0 1 2-2z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Deezer Premium: 1 Mes</h3>
+                        <p class="description">Acceso a Deezer Premium por 1 mes.</p>
+                        <div class="price">$10.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+
+                <!-- Spotify -->
+                <div class="product-card">
+                    <div class="image-container">
+                        <!-- Spotify Logo -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-spotify" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path fill="#000" d="M10 13a3 3 0 0 1 4 0M8 15a6 6 0 0 1 8 0M6 17a9 9 0 0 1 12 0"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Spotify: 1 Mes</h3>
+                        <p class="description">Acceso a Spotify Premium por 1 mes.</p>
+                        <div class="price">$13.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-spotify" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path fill="#000" d="M10 13a3 3 0 0 1 4 0M8 15a6 6 0 0 1 8 0M6 17a9 9 0 0 1 12 0"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Spotify: 2 Meses</h3>
+                        <p class="description">Acceso a Spotify Premium por 2 meses.</p>
+                        <div class="price">$24.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-spotify" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path fill="#000" d="M10 13a3 3 0 0 1 4 0M8 15a6 6 0 0 1 8 0M6 17a9 9 0 0 1 12 0"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Spotify: 3 Meses</h3>
+                        <p class="description">Acceso a Spotify Premium por 3 meses.</p>
+                        <div class="price">$35.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+
+                <!-- Apple Music -->
+                <div class="product-card">
+                    <div class="image-container">
+                        <!-- Apple Music Logo (Note) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-apple-music" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 10A7.5 7.5 0 0 1 10 2.5a7.5 7.5 0 0 1 7.5 7.5v7.5A2.5 2.5 0 0 1 15 20h-3a2.5 2.5 0 0 1-2.5-2.5V7.5a2.5 2.5 0 0 1 2.5-2.5h3A2.5 2.5 0 0 1 15 7.5v2.5h2.5z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Apple Music: 1 Mes (Android)</h3>
+                        <p class="description">Membresía Apple Music por 1 mes (solo para Android).</p>
+                        <div class="price">$12.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: INTELIGENCIA ARTIFICIAL -->
+            <h2 class="category-title" id="ia">🤖 INTELIGENCIA ARTIFICIAL</h2>
+            <div class="product-grid">
+                <!-- ChatGPT Plus -->
+                <div class="product-card">
+                    <div class="image-container">
+                        <!-- ChatGPT Logo (OpenAI) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-chatgpt" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 1 0 22 12 10 10 0 0 0 12 2zm3.5 14.5a.5.5 0 0 1-1 0v-4h-4a.5.5 0 0 1 0-1h4V8a.5.5 0 0 1 1 0z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>ChatGPT Plus: 1 Mes</h3>
+                        <p class="description">Acceso a la suscripción ChatGPT Plus (1 mes).</p>
+                        <div class="price">$59.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+
+                <!-- Gemini (Google AI) -->
+                <div class="product-card">
+                    <div class="image-container">
+                        <!-- Gemini Logo (Stylized G) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="logo-svg icon-gemini" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c-3.37 0-6.12 2.76-6.12 6.13a6.11 6.11 0 0 0 3.37 5.48L12 22l2.75-8.39a6.11 6.11 0 0 0 3.37-5.48C18.12 4.76 15.37 2 12 2zM12 10.36a2.22 2.22 0 1 1 2.22-2.23A2.22 2.22 0 0 1 12 10.36z"/></svg>
+                    </div>
+                    <div class="product-info">
+                        <h3>Gemini (Google AI): 1 Mes</h3>
+                        <p class="description">Acceso a la suite de Inteligencia Artificial de Google (1 mes).</p>
+                        <div class="price">$59.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: COMBOS SUPER MAX -->
+            <h2 class="category-title" id="combos">🎁 COMBOS SUPER MAX</h2>
+            <p style="color: #ff8c00; font-weight: 600; margin-bottom: 20px;">(Disponibles hasta el 24 de octubre)</p>
+            <div class="product-grid">
+                
+                <!-- HBO Max + Paramount -->
+                <div class="product-card">
+                    <span class="combo-label">COMBO 🔥</span>
+                    <div class="image-container">
+                         <!-- HBO Max + Paramount (Dual Logo Placeholder) -->
+                         <img class="logo-svg" style="height: 100%; width: 100%; object-fit: contain; padding: 10px;" src="https://placehold.co/400x180/92278f/00329c?text=HBO+MAX+%2B+PARAMOUNT" alt="Combo HBO Max + Paramount">
+                    </div>
+                    <div class="product-info">
+                        <h3>HBO Max + Paramount</h3>
+                        <p class="description">Acceso a ambas plataformas por un precio especial.</p>
+                        <div class="price">$17.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- HBO Max + Prime -->
+                <div class="product-card">
+                    <span class="combo-label">COMBO 🔥</span>
+                    <div class="image-container">
+                         <img class="logo-svg" style="height: 100%; width: 100%; object-fit: contain; padding: 10px;" src="https://placehold.co/400x180/92278f/00a8e1?text=HBO+MAX+%2B+PRIME" alt="Combo HBO Max + Prime">
+                    </div>
+                    <div class="product-info">
+                        <h3>HBO Max + Prime</h3>
+                        <p class="description">Acceso a HBO Max y Amazon Prime Video.</p>
+                        <div class="price">$17.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- HBO Max + Disney -->
+                <div class="product-card">
+                    <span class="combo-label">COMBO 🔥</span>
+                    <div class="image-container">
+                         <img class="logo-svg" style="height: 100%; width: 100%; object-fit: contain; padding: 10px;" src="https://placehold.co/400x180/92278f/02022d?text=HBO+MAX+%2B+DISNEY" alt="Combo HBO Max + Disney">
+                    </div>
+                    <div class="product-info">
+                        <h3>HBO Max + Disney+</h3>
+                        <p class="description">Disfruta de la mejor programación de HBO y Disney.</p>
+                        <div class="price">$17.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- HBO Max + Universal+ -->
+                <div class="product-card">
+                    <span class="combo-label">COMBO 🔥</span>
+                    <div class="image-container">
+                         <img class="logo-svg" style="height: 100%; width: 100%; object-fit: contain; padding: 10px;" src="https://placehold.co/400x180/92278f/000000?text=HBO+MAX+%2B+UNIVERSAL%2B" alt="Combo HBO Max + Universal+">
+                    </div>
+                    <div class="product-info">
+                        <h3>HBO Max + Universal+</h3>
+                        <p class="description">Acceso a HBO Max y el contenido de Universal+.</p>
+                        <div class="price">$18.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- HBO Max + ViX -->
+                <div class="product-card">
+                    <span class="combo-label">COMBO 🔥</span>
+                    <div class="image-container">
+                         <img class="logo-svg" style="height: 100%; width: 100%; object-fit: contain; padding: 10px;" src="https://placehold.co/400x180/92278f/ff0070?text=HBO+MAX+%2B+VIX" alt="Combo HBO Max + ViX">
+                    </div>
+                    <div class="product-info">
+                        <h3>HBO Max + ViX</h3>
+                        <p class="description">Acceso a HBO Max y la plataforma de ViX.</p>
+                        <div class="price">$17.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Sección: COMBOS NETFLIX -->
+            <h2 class="category-title">🎃 COMBOS NETFLIX</h2>
+            <p style="color: #e50914; font-weight: 600; margin-bottom: 5px;">(Acceso general: 1 de noviembre de 2025)</p>
+            <p style="color: var(--dark-muted); margin-bottom: 20px;">✨ Acceso anticipado si sigues <span style="color: var(--accent-blue);">@Sublymas.co</span></p>
+
+            <div class="product-grid">
+                
+                <!-- Netflix + Crunchyroll -->
+                <div class="product-card">
+                    <span class="combo-label">COMBO 🍿</span>
+                    <div class="image-container">
+                         <img class="logo-svg" style="height: 100%; width: 100%; object-fit: contain; padding: 10px;" src="https://placehold.co/400x180/e50914/f48a06?text=NETFLIX+%2B+CRUNCHYROLL" alt="Combo Netflix + Crunchyroll">
+                    </div>
+                    <div class="product-info">
+                        <h3>Netflix + Crunchyroll</h3>
+                        <p class="description">El mejor cine y series con el mejor anime.</p>
+                        <div class="price">$20.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- Netflix + Prime Video -->
+                <div class="product-card">
+                    <span class="combo-label">COMBO 🍿</span>
+                    <div class="image-container">
+                         <img class="logo-svg" style="height: 100%; width: 100%; object-fit: contain; padding: 10px;" src="https://placehold.co/400x180/e50914/00a8e1?text=NETFLIX+%2B+PRIME+VIDEO" alt="Combo Netflix + Prime Video">
+                    </div>
+                    <div class="product-info">
+                        <h3>Netflix + Prime Video</h3>
+                        <p class="description">Doble entretenimiento de las plataformas líderes.</p>
+                        <div class="price">$20.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- Netflix + Disney+ -->
+                <div class="product-card">
+                    <span class="combo-label">COMBO 🍿</span>
+                    <div class="image-container">
+                         <img class="logo-svg" style="height: 100%; width: 100%; object-fit: contain; padding: 10px;" src="https://placehold.co/400x180/e50914/02022d?text=NETFLIX+%2B+DISNEY%2B" alt="Combo Netflix + Disney+">
+                    </div>
+                    <div class="product-info">
+                        <h3>Netflix + Disney+</h3>
+                        <p class="description">Acceso a Netflix y todo el catálogo de Disney.</p>
+                        <div class="price">$22.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- Netflix + Max (HBO) -->
+                <div class="product-card">
+                    <span class="combo-label">COMBO 🍿</span>
+                    <div class="image-container">
+                         <img class="logo-svg" style="height: 100%; width: 100%; object-fit: contain; padding: 10px;" src="https://placehold.co/400x180/e50914/92278f?text=NETFLIX+%2B+MAX+(HBO)" alt="Combo Netflix + Max (HBO)">
+                    </div>
+                    <div class="product-info">
+                        <h3>Netflix + Max (HBO)</h3>
+                        <p class="description">Lo mejor del cine y las series originales de HBO.</p>
+                        <div class="price">$20.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px; text-align: center; padding: 20px; border-top: 1px solid #333; color: var(--dark-muted);">
+                <p>Beneficios: sorteos 🎁, descuentos 💸, acceso anticipado 🚀 y precios exclusivos 🔥</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para manejar el toggle manual (funciona en todas las pantallas)
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('hidden');
+            document.getElementById('mainContent').classList.toggle('expanded');
+        });
+
+        // Ocultar sidebar en móvil al cargar o redimensionar
+        function checkScreenWidth() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Si el ancho de la ventana es menor o igual a 1024px, ocultamos por defecto
+            if (window.innerWidth <= 1024) {
+                sidebar.classList.add('hidden');
+                mainContent.classList.add('expanded');
+            } else {
+                // En escritorio, aseguramos que la barra lateral no esté oculta a menos que el usuario la haya cerrado manualmente
+                if (!sidebar.classList.contains('hidden')) {
+                     sidebar.classList.remove('hidden');
+                     mainContent.classList.remove('expanded');
+                }
+            }
+        }
+
+        window.addEventListener('resize', checkScreenWidth);
+        document.addEventListener('DOMContentLoaded', checkScreenWidth);
+    </script>
+</body>
+</html>
