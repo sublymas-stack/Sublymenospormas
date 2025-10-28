@@ -76,8 +76,35 @@
             stroke-width: 2;
         }
         
+        /* --- NAVEGACIÓN PRINCIPAL (Ajustado para el toggle universal) --- */
+        
+        .toggle-nav-btn {
+            display: block; /* Mantenemos el botón visible siempre */
+            background: none;
+            border: none;
+            color: var(--dark-text);
+            font-size: 22px; 
+            cursor: pointer;
+            /* Empujar el contacto a la derecha */
+            margin-right: auto; 
+            margin-left: 20px;
+        }
+
+        .main-nav-bar {
+            /* Oculto por defecto en todas las pantallas */
+            display: none; 
+            padding: 0 20px;
+            border-bottom: 1px solid #333; 
+        }
+
+        /* Estado activo (Desktop/Universal) */
+        .main-nav-bar.active {
+            display: block; /* Mostrar el contenedor de navegación */
+        }
+        
         .main-nav-links {
-            display: flex;
+            display: flex; 
+            flex-direction: row; /* Horizontal en desktop */
             list-style: none;
             padding: 0;
             margin: 0;
@@ -86,16 +113,16 @@
         .main-nav-links a {
             display: flex;
             align-items: center;
-            gap: 6px; /* Espacio entre icono y texto */
-            padding: 8px 12px; /* Padding de enlaces más pequeño */
+            gap: 6px; 
+            padding: 8px 12px; 
             color: var(--dark-muted);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.95em; /* Texto de navegación más pequeño */
+            font-size: 0.95em; 
             transition: color 0.2s, background-color 0.2s;
         }
         .main-nav-links a svg {
-            width: 18px; /* Iconos de navegación más pequeños */
+            width: 18px; 
             height: 18px;
             stroke: currentColor;
             fill: none;
@@ -104,21 +131,12 @@
 
         .main-nav-links a:hover, .main-nav-links a.active {
             color: var(--accent-blue);
-            border-bottom: 2px solid var(--accent-blue); /* Borde más delgado */
-            padding-bottom: 6px; /* Ajuste para el borde */
+            border-bottom: 2px solid var(--accent-blue); 
+            padding-bottom: 6px; 
         }
         
         .nav-link-item {
             display: block;
-        }
-
-        .toggle-nav-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--dark-text);
-            font-size: 22px; /* Botón de toggle ligeramente más pequeño */
-            cursor: pointer;
         }
 
         /* --- Contenido Principal --- */
@@ -140,24 +158,24 @@
         /* --- Estilos Generales --- */
         .breadcrumb {
             color: var(--dark-muted);
-            margin-bottom: 18px; /* Margen ligeramente reducido */
-            font-size: 0.85em; /* Breadcrumb más pequeño */
+            margin-bottom: 18px; 
+            font-size: 0.85em; 
         }
 
         .shop-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px; /* Margen ligeramente reducido */
+            margin-bottom: 25px; 
             flex-wrap: wrap;
-            gap: 12px; /* Espacio entre elementos del header */
+            gap: 12px; 
         }
         
         .category-title {
-            font-size: 1.6em; /* Título de categoría más pequeño */
+            font-size: 1.6em; 
             font-weight: 800;
             color: var(--accent-blue);
-            margin: 25px 0 12px 0; /* Márgenes ajustados */
+            margin: 25px 0 12px 0; 
             border-bottom: 2px solid rgba(0, 196, 255, 0.3);
             padding-bottom: 4px;
         }
@@ -169,26 +187,26 @@
         .search-box input {
             background-color: var(--dark-card);
             border: 1px solid #444;
-            padding: 10px 15px 10px 35px; /* Padding ajustado */
-            border-radius: 8px; /* Border-radius ligeramente más pequeño */
+            padding: 10px 15px 10px 35px; 
+            border-radius: 8px; 
             color: var(--dark-text);
-            width: 250px; /* Ancho del input de búsqueda */
-            font-size: 0.9em; /* Texto del input más pequeño */
+            width: 250px; 
+            font-size: 0.9em; 
             outline: none;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
         .search-box input:focus {
             border-color: var(--accent-blue);
-            box-shadow: 0 0 4px rgba(0, 196, 255, 0.4); /* Sombra más sutil */
+            box-shadow: 0 0 4px rgba(0, 196, 255, 0.4); 
         }
 
         .search-box svg {
             position: absolute;
-            left: 10px; /* Posición del icono ajustada */
+            left: 10px; 
             top: 50%;
             transform: translateY(-50%);
             color: var(--dark-muted);
-            width: 18px; /* Icono de búsqueda más pequeño */
+            width: 18px; 
             height: 18px;
             fill: none;
             stroke: currentColor;
@@ -197,15 +215,15 @@
 
         .filters {
             display: flex;
-            gap: 12px; /* Espacio entre filtros */
+            gap: 12px; 
             align-items: center;
         }
 
         .filters select {
             background-color: var(--dark-card);
             border: 1px solid #444;
-            padding: 8px 12px; /* Padding del select ajustado */
-            border-radius: 8px; /* Border-radius ligeramente más pequeño */
+            padding: 8px 12px; 
+            border-radius: 8px; 
             color: var(--dark-text);
             outline: none;
             -webkit-appearance: none;
@@ -213,9 +231,9 @@
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23f0f0f0'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 8px center; /* Posición del icono ajustada */
-            padding-right: 30px; /* Padding para el icono */
-            font-size: 0.9em; /* Texto del select más pequeño */
+            background-position: right 8px center; 
+            padding-right: 30px; 
+            font-size: 0.9em; 
         }
         
         .view-toggle button {
@@ -230,37 +248,37 @@
         /* Product Cards */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Min-width de tarjeta ligeramente menor */
-            gap: 25px; /* Espacio entre tarjetas */
-            margin-bottom: 30px; /* Margen inferior */
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            gap: 25px; 
+            margin-bottom: 30px; 
         }
         .product-card {
             background-color: var(--dark-card);
-            border-radius: 12px; /* Border-radius más pequeño */
+            border-radius: 12px; 
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra más sutil */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
             transition: transform 0.3s ease-in-out, box-shadow 0.3s;
             position: relative;
             display: flex;
             flex-direction: column;
-            border: 1px solid transparent; /* Borde más delgado */
+            border: 1px solid transparent; 
         }
         .product-card:hover {
-            transform: translateY(-6px) scale(1.01); /* Elevación y escala ligeramente menores */
+            transform: translateY(-6px) scale(1.01); 
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), var(--accent-glow);
             border-color: var(--accent-blue);
         }
         .product-card .combo-label {
-            top: 10px; /* Posición de la etiqueta */
+            top: 10px; 
             left: 10px;
-            padding: 5px 10px; /* Padding más pequeño */
+            padding: 5px 10px; 
             border-radius: 6px;
-            font-size: 0.8em; /* Tamaño de fuente de la etiqueta */
+            font-size: 0.8em; 
         }
         .product-card .image-container {
             width: 100%;
-            height: 160px; /* Altura de la imagen reducida */
-            background-color: #000; /* Default fallback */
+            height: 160px; 
+            background-color: #000; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -271,8 +289,8 @@
             height: 100%;
             width: 100%;
             object-fit: contain;
-            padding: 20px; /* Padding para que el logo se vea centrado y no toque los bordes */
-            background-color: #1a1a1a; /* Fondo de la imagen por defecto */
+            padding: 20px; 
+            background-color: #1a1a1a; 
         }
         /* Specific brand background colors for fallback aesthetics if image fails */
         .brand-bg-appletv { background-color: #000000; }
@@ -288,31 +306,31 @@
         .brand-bg-combo { background-color: #2a2a2a; }
 
         .product-info {
-            padding: 15px; /* Padding de la información del producto */
+            padding: 15px; 
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
         .product-info h3 {
-            font-size: 1.1em; /* Título del producto más pequeño */
+            font-size: 1.1em; 
             margin: 0 0 4px;
             font-weight: 700;
         }
         .product-info p.description {
-            font-size: 0.8em; /* Descripción más pequeña */
-            margin-bottom: 10px; /* Margen inferior */
+            font-size: 0.8em; 
+            margin-bottom: 10px; 
             flex-grow: 1;
         }
         .product-info .price {
-            font-size: 1.3em; /* Precio más pequeño */
+            font-size: 1.3em; 
             margin-bottom: 12px;
         }
         .product-info .action-btn {
-            padding: 10px 15px; /* Padding del botón más pequeño */
-            border-radius: 8px; /* Border-radius más pequeño */
+            padding: 10px 15px; 
+            border-radius: 8px; 
             font-weight: 600;
-            box-shadow: 0 3px 8px rgba(0, 196, 255, 0.3); /* Sombra más sutil */
+            box-shadow: 0 3px 8px rgba(0, 196, 255, 0.3); 
         }
         .product-info .action-btn:not(.disabled):hover {
             box-shadow: var(--accent-glow);
@@ -322,8 +340,8 @@
         /* Media Queries para Responsividad */
         @media (max-width: 1024px) {
             :root {
-                font-size: 14px; /* Font-size base para tablets */
-                --header-height: 60px; /* Header un poco más pequeño en tablets */
+                font-size: 14px; 
+                --header-height: 60px; 
             }
             body {
                 padding-top: var(--header-height);
@@ -336,27 +354,49 @@
             }
             .toggle-nav-btn {
                 font-size: 20px;
+                margin-left: 10px;
             }
+            
+            /* Ajuste para menú móvil: vertical, absoluto y debajo del header */
+            .main-nav-bar.active {
+                position: absolute;
+                top: var(--header-height); 
+                left: 0;
+                width: 100%;
+                background-color: var(--dark-bg);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+                padding: 0; /* Padding movido a UL */
+                border-bottom: none;
+                z-index: 999;
+            }
+            
             .main-nav-links {
-                top: 60px; /* Ajuste para la nueva altura del header */
-                padding: 8px 0;
+                flex-direction: column; /* Vertical stacking on mobile */
+                width: 100%;
+                padding: 8px 0; /* Padding interno */
             }
             .main-nav-links a {
-                padding: 10px 15px;
-                font-size: 0.9em;
+                padding: 10px 15px; /* Más espacio para touch */
+                border-bottom: none !important; 
             }
+            .main-nav-links a:hover, .main-nav-links a.active {
+                border-bottom: none;
+                background-color: rgba(0, 196, 255, 0.1);
+                padding-bottom: 10px; 
+            }
+            
             .content-area {
                 padding: 20px 15px;
             }
             .search-box input {
-                width: 200px; /* Ancho del search box en tablets */
+                width: 200px; 
             }
         }
 
         @media (max-width: 768px) {
             :root {
-                font-size: 13px; /* Font-size base para móviles */
-                --header-height: 55px; /* Header más pequeño en móviles */
+                font-size: 13px; 
+                --header-height: 55px; 
             }
             body {
                 padding-top: var(--header-height);
@@ -370,72 +410,18 @@
             .toggle-nav-btn {
                 font-size: 18px;
             }
-            .main-nav-links {
-                top: 55px; /* Ajuste para la nueva altura del header */
+            /* ... (resto de mobile queries) ... */
+            .main-nav-bar.active {
+                top: var(--header-height); 
             }
             .main-nav-links a {
-                padding: 8px 10px;
                 font-size: 0.85em;
             }
             .content-area {
                 padding: 15px 10px;
             }
-            .shop-header {
-                gap: 10px;
-                margin-bottom: 20px;
-            }
-            .category-title {
-                font-size: 1.4em;
-                margin: 20px 0 10px 0;
-            }
-            .search-box input {
-                width: 100%;
-                padding: 8px 12px 8px 30px;
-                font-size: 0.85em;
-            }
-            .search-box svg {
-                left: 8px;
-                width: 16px;
-                height: 16px;
-            }
-            .filters select {
-                padding: 7px 10px;
-                font-size: 0.85em;
-                background-position: right 7px center;
-                padding-right: 25px;
-            }
-            .view-toggle button {
-                padding: 6px;
-            }
-            .view-toggle svg {
-                width: 16px;
-                height: 16px;
-            }
             .product-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Min-width más pequeño para móvil */
-                gap: 15px;
-            }
-            .product-card {
-                border-radius: 10px;
-            }
-            .product-card .image-container {
-                height: 120px; /* Altura de imagen más pequeña */
-            }
-            .product-info {
-                padding: 10px;
-            }
-            .product-info h3 {
-                font-size: 1em;
-            }
-            .product-info p.description {
-                font-size: 0.75em;
-            }
-            .product-info .price {
-                font-size: 1.1em;
-            }
-            .product-info .action-btn {
-                padding: 8px 10px;
-                font-size: 0.9em;
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
             }
         }
     </style>
@@ -444,9 +430,9 @@
 
     <!-- Nuevo Header Fijo Superior --><header class="top-header-navigation" id="topHeaderNav">
         <div class="header-main-bar">
-            <!-- Logo --><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAxMjAgMzAiPgogIDx0ZXh0IHg9IjUiIHy9IjIyIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiMwMEM0RkYiPlNVQkxZKzwvdGV4dD4KPC9zdmc+" alt="Logo Subly+ Marketplace" class="logo">
+            <!-- Logo --><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAxMjAgMzAiPgogIDx0ZXh0IHg9IjUiIHk9IjIyIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiMwMEM0RkYiPlNVQkxZKzwvdGV4dD4KPC9zdmc+" alt="Logo Subly+ Marketplace" class="logo">
             
-            <!-- Botón de Menú Móvil --><button class="toggle-nav-btn" id="toggleNavBtn">☰</button>
+            <!-- Botón de Menú (Visible siempre) --><button class="toggle-nav-btn" id="toggleNavBtn">☰</button>
 
             <!-- Información de Contacto (visible en desktop) --><div class="contact-info">
                 <a href="tel:+573183826283" class="contact">Escríbenos: <strong style="color: var(--accent-blue);">+57 3183826283</strong></a>
@@ -454,15 +440,14 @@
             </div>
         </div>
         
-        <!-- Navegación Principal (Hidden in Mobile by default) --><nav class="main-nav-bar">
-            <ul class="main-nav-links" id="mainNavLinks">
+        <!-- Navegación Principal (Ahora controlada por el toggle) --><nav class="main-nav-bar" id="mainNav">
+            <ul class="main-nav-links">
                 <li class="nav-link-item"><a href="#" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Inicio</a></li>
                 <li class="nav-link-item"><a href="#entretenimiento"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clapperboard"><path d="M22 17H2a3 3 0 0 0 0 6h20V17z"/><path d="M2 17V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12H2z"/><line x1="12" y1="13" x2="12" y2="17"/><line x1="6" y1="13" x2="6" y2="17"/><line x1="18" y1="13" x2="18" y2="17"/></svg>Entretenimiento</a></li>
                 <li class="nav-link-item"><a href="#musica"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-music"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Música</a></li>
                 <li class="nav-link-item"><a href="#ia"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain"><path d="M12 5c-.34 0-.67.04-1 .09 2.52 1.22 4 4.01 4 7.91 0 1.5-.47 2.9-1.3 4 1.29.07 2.6-.34 3.47-1.3.4-.4.65-.9.8-1.4.58-2.06-.52-4.2-2.8-5.75-.4-.3-.8-.5-1.2-.7"/><path d="M12 5c.34 0 .67.04 1 .09-2.52 1.22-4 4.01-4 7.91 0 1.5.47 2.9 1.3 4-1.29.07-2.6-.34-3.47-1.3-.4-.4-.65-.9-.8-1.4-.58-2.06.52-4.2 2.8-5.75.4-.3.8-.5 1.2-.7"/><path d="M12 13a4 4 0 0 0 0-8c-.02 0-.05 0-.07 0-2.42.45-4.23 2.5-4.23 4.97A4.25 4.25 0 0 0 12 13zM6 17a4 4 0 0 0 4 4 4 4 0 0 0 4-4"/><path d="M10 19c-.3-.7-1-2-2-2m6 0c.3-.7 1-2 2-2"/></svg>Inteligencia Artificial</a></li>
                 <li class="nav-link-item"><a href="#combos"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package"><path d="M16.5 9.4A2 2 0 0 1 18 10v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-9a2 2 0 0 1 1.5-1.9M2 7h20M7 21v-3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3M12 2v5M12 10v4"/></svg>Combos</a></li>
-                <li class="nav-link-item"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Mi cuenta</a></li>
-                <li class="nav-link-item"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Log Out</a></li>
+                <!-- Se eliminaron "Mi cuenta" y "Log Out" -->
             </ul>
         </nav>
     </header>
@@ -490,7 +475,7 @@
                             <!-- Grid View Icon SVG --><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-grid"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
                         </button>
                         <button>
-                            <!-- List View Icon SVG --><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+                            <!-- List View Icon SVG --><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
                         </button>
                     </div>
                 </div>
@@ -949,18 +934,19 @@
     </div>
 
     <script>
-        // Lógica para alternar el menú en móviles
+        // Obtenemos la barra de navegación principal (NAV)
+        const mainNav = document.getElementById('mainNav');
+
+        // Lógica para alternar el menú en todas las pantallas
         document.getElementById('toggleNavBtn').addEventListener('click', function() {
-            document.getElementById('mainNavLinks').classList.toggle('active');
+            mainNav.classList.toggle('active');
         });
 
-        // Ocultar el menú móvil cuando se hace clic en un enlace de categoría
+        // Ocultar el menú cuando se hace clic en un enlace de categoría
         document.querySelectorAll('.main-nav-links a').forEach(link => {
             link.addEventListener('click', function() {
-                // Solo si el menú está visible (es decir, estamos en móvil)
-                if (window.innerWidth <= 1024) {
-                    document.getElementById('mainNavLinks').classList.remove('active');
-                }
+                // Cerramos el menú después de hacer clic
+                mainNav.classList.remove('active');
             });
         });
 
@@ -969,6 +955,7 @@
             const navLinks = document.querySelectorAll('.main-nav-links a');
             
             function updateActiveLink() {
+                // Obtiene el hash actual o usa '#' para la página de inicio
                 let currentHash = window.location.hash || '#';
 
                 navLinks.forEach(link => {
