@@ -271,11 +271,16 @@
             border-color: var(--accent-blue);
         }
         .product-card .combo-label {
+            position: absolute; /* Para el label del combo */
             top: 10px; 
             left: 10px;
+            background-color: var(--accent-blue); /* Color de acento para el combo */
+            color: #000;
             padding: 5px 10px; 
             border-radius: 6px;
             font-size: 0.8em; 
+            font-weight: 600;
+            z-index: 10;
         }
         .product-card .image-container {
             width: 100%;
@@ -285,14 +290,15 @@
             align-items: center;
             justify-content: center;
             border-bottom: 1px solid #333;
+            padding: 15px; /* Añadido padding para que el logo no se pegue a los bordes */
+            box-sizing: border-box; /* Incluye el padding en el cálculo de la altura/anchura */
         }
         /* Style for brand logos placeholders */
         .brand-logo-img {
             height: 100%;
             width: 100%;
-            object-fit: contain;
-            padding: 20px; 
-            background-color: #1a1a1a; 
+            object-fit: contain; /* Redimensiona el contenido para que quepa, manteniendo relación de aspecto */
+            background-color: transparent; /* No un color de fondo para la imagen, solo el contenedor */
         }
         /* Specific brand background colors for fallback aesthetics if image fails */
         .brand-bg-appletv { background-color: #000000; }
@@ -305,7 +311,7 @@
         .brand-bg-applemusic { background-color: #fa2139; }
         .brand-bg-chatgpt { background-color: #10a37f; }
         .brand-bg-gemini { background: linear-gradient(135deg, #4285F4, #34A853, #FBBC05, #EA4335); }
-        .brand-bg-combo { background-color: #2a2a2a; }
+        .brand-bg-combo { background-color: #2a2a2a; } /* Fondo neutral para combos */
 
         .product-info {
             padding: 15px; 
@@ -321,8 +327,14 @@
         }
         .product-info p.description {
             font-size: 0.8em; 
-            margin-bottom: 10px; 
+            margin-bottom: 5px; /* Ajuste para dar espacio al nuevo span */
             flex-grow: 1;
+        }
+        .product-info .duration {
+            font-size: 0.75em; /* Tamaño más pequeño para la duración */
+            color: var(--dark-muted);
+            margin-bottom: 10px;
+            display: block; /* Asegura que tome su propia línea */
         }
         .product-info .price {
             font-size: 1.3em; 
@@ -333,6 +345,11 @@
             border-radius: 8px; 
             font-weight: 600;
             box-shadow: 0 3px 8px rgba(0, 196, 255, 0.3); 
+            background-color: var(--accent-blue);
+            color: #000;
+            text-decoration: none; /* Quitamos el subrayado del enlace */
+            display: block; /* Hace que el botón ocupe todo el ancho */
+            text-align: center;
         }
         .product-info .action-btn:not(.disabled):hover {
             box-shadow: var(--accent-glow);
@@ -453,8 +470,7 @@
                 <li class="nav-link-item"><a href="#musica"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-music"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Música</a></li>
                 <li class="nav-link-item"><a href="#ia"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain"><path d="M12 5c-.34 0-.67.04-1 .09 2.52 1.22 4 4.01 4 7.91 0 1.5-.47 2.9-1.3 4 1.29.07 2.6-.34 3.47-1.3.4-.4.65-.9.8-1.4.58-2.06-.52-4.2-2.8-5.75-.4-.3-.8-.5-1.2-.7"/><path d="M12 5c.34 0 .67.04 1 .09-2.52 1.22-4 4.01-4 7.91 0 1.5.47 2.9 1.3 4-1.29.07-2.6-.34-3.47-1.3-.4-.4-.65-.9-.8-1.4-.58-2.06.52-4.2 2.8-5.75.4-.3.8-.5 1.2-.7"/><path d="M12 13a4 4 0 0 0 0-8c-.02 0-.05 0-.07 0-2.42.45-4.23 2.5-4.23 4.97A4.25 4.25 0 0 0 12 13zM6 17a4 4 0 0 0 4 4 4 4 0 0 0 4-4"/><path d="M10 19c-.3-.7-1-2-2-2m6 0c.3-.7 1-2 2-2"/></svg>Inteligencia Artificial</a></li>
                 <li class="nav-link-item"><a href="#combos"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package"><path d="M16.5 9.4A2 2 0 0 1 18 10v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-9a2 2 0 0 1 1.5-1.9M2 7h20M7 21v-3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3M12 2v5M12 10v4"/></svg>Combos</a></li>
-                <!-- Se eliminaron "Mi cuenta" y "Log Out" -->
-            </ul>
+                <!-- Se eliminaron "Mi cuenta" y "Log Out" --></ul>
         </nav>
     </header>
 
@@ -489,316 +505,343 @@
 
             <!-- Sección: ENTRETENIMIENTO --><h2 class="category-title" id="entretenimiento">🎬 ENTRETENIMIENTO</h2>
             <div class="product-grid">
-                <!-- Apple TV+ --><div class="product-card">
+                <!-- Apple TV+ --><div class="product-card" data-product-type="Entretenimiento" data-product-name="Apple TV+: Pantalla" data-months="1">
                     <div class="image-container brand-bg-appletv">
-                        <!-- Logo Image Placeholder (Apple TV) --><img src="https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B" alt="Logo Apple TV+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B'; this.classList.remove('brand-logo-img');" />
+                        <!-- Logo Image Placeholder (Apple TV) --><img src="https://logolook.net/wp-content/uploads/2023/07/Apple-TV-Logo.png" alt="Logo Apple TV+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Apple TV+: Pantalla</h3>
-                        <p class="description">Acceso a 1 Pantalla de Apple TV+ por 1 mes.</p>
+                        <p class="description">Acceso a 1 Pantalla de Apple TV+.</p>
+                        <span class="duration"></span>
                         <div class="price">$18.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="📺">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Entretenimiento" data-product-name="Apple TV+: Pantalla" data-months="3">
                     <div class="image-container brand-bg-appletv">
-                        <img src="https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B" alt="Logo Apple TV+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2023/07/Apple-TV-Logo.png" alt="Logo Apple TV+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Apple TV+: Pantalla</h3>
-                        <p class="description">Acceso a 1 Pantalla de Apple TV+ por 3 meses.</p>
+                        <p class="description">Acceso a 1 Pantalla de Apple TV+.</p>
+                        <span class="duration"></span>
                         <div class="price">$79.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="📺">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Entretenimiento" data-product-name="Apple TV+: Completa" data-months="1">
                     <div class="image-container brand-bg-appletv">
-                        <img src="https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B" alt="Logo Apple TV+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2023/07/Apple-TV-Logo.png" alt="Logo Apple TV+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Apple TV+: Completa</h3>
-                        <p class="description">Cuenta completa de Apple TV+ por 1 mes.</p>
+                        <p class="description">Cuenta completa de Apple TV+.</p>
+                        <span class="duration"></span>
                         <div class="price">$20.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="📺">Comprar</a>
                     </div>
                 </div>
 
-                <!-- Paramount+ --><div class="product-card">
+                <!-- Paramount+ --><div class="product-card" data-product-type="Entretenimiento" data-product-name="Paramount+: Pantalla" data-months="1">
                     <div class="image-container brand-bg-paramount">
-                        <!-- Logo Image Placeholder (Paramount+) --><img src="https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B" alt="Logo Paramount+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B'; this.classList.remove('brand-logo-img');" />
+                        <!-- Logo Image Placeholder (Paramount+) --><img src="https://logolook.net/wp-content/uploads/2022/08/Paramount-Logo.png" alt="Logo Paramount+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Paramount+: Pantalla</h3>
-                        <p class="description">Acceso a 1 Pantalla de Paramount+ por 1 mes.</p>
+                        <p class="description">Acceso a 1 Pantalla de Paramount+.</p>
+                        <span class="duration"></span>
                         <div class="price">$10.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🌟">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Entretenimiento" data-product-name="Paramount+: Completa" data-months="1">
                     <div class="image-container brand-bg-paramount">
-                        <img src="https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B" alt="Logo Paramount+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2022/08/Paramount-Logo.png" alt="Logo Paramount+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Paramount+: Completa</h3>
-                        <p class="description">Cuenta completa de Paramount+ por 1 mes.</p>
+                        <p class="description">Cuenta completa de Paramount+.</p>
+                        <span class="duration"></span>
                         <div class="price">$15.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🌟">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Entretenimiento" data-product-name="Paramount+: Original Pantalla" data-months="1">
                     <div class="image-container brand-bg-paramount">
-                        <img src="https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B" alt="Logo Paramount+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2022/08/Paramount-Logo.png" alt="Logo Paramount+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Paramount+: Original Pantalla</h3>
-                        <p class="description">Pantalla original de Paramount+ por 1 mes.</p>
+                        <p class="description">Pantalla original de Paramount+.</p>
+                        <span class="duration"></span>
                         <div class="price">$17.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🌟">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Entretenimiento" data-product-name="Paramount+: Original Completa" data-months="1">
                     <div class="image-container brand-bg-paramount">
-                        <img src="https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B" alt="Logo Paramount+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2022/08/Paramount-Logo.png" alt="Logo Paramount+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Paramount+: Original Completa</h3>
-                        <p class="description">Cuenta completa original de Paramount+ por 1 mes.</p>
+                        <p class="description">Cuenta completa original de Paramount+.</p>
+                        <span class="duration"></span>
                         <div class="price">$18.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🌟">Comprar</a>
                     </div>
                 </div>
 
-                <!-- Crunchyroll --><div class="product-card">
+                <!-- Crunchyroll --><div class="product-card" data-product-type="Entretenimiento" data-product-name="Crunchyroll: Pantalla" data-months="1">
                     <div class="image-container brand-bg-crunchyroll">
-                        <!-- Logo Image Placeholder (Crunchyroll) --><img src="https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL" alt="Logo Crunchyroll" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL'; this.classList.remove('brand-logo-img');" />
+                        <!-- Logo Image Placeholder (Crunchyroll) --><img src="https://www.crunchyroll.com/build/assets/img/favicons/apple-touch-icon.png" alt="Logo Crunchyroll" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Crunchyroll: Pantalla</h3>
-                        <p class="description">Acceso a una Pantalla de Crunchyroll por 1 mes.</p>
+                        <p class="description">Acceso a una Pantalla de Crunchyroll.</p>
+                        <span class="duration"></span>
                         <div class="price">$7.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🍣">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Entretenimiento" data-product-name="Crunchyroll: Completa" data-months="1">
                     <div class="image-container brand-bg-crunchyroll">
-                        <img src="https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL" alt="Logo Crunchyroll" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://www.crunchyroll.com/build/assets/img/favicons/apple-touch-icon.png" alt="Logo Crunchyroll" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Crunchyroll: Completa</h3>
-                        <p class="description">Cuenta completa de Crunchyroll por 1 mes.</p>
+                        <p class="description">Cuenta completa de Crunchyroll.</p>
+                        <span class="duration"></span>
                         <div class="price">$13.500</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🍣">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Entretenimiento" data-product-name="Crunchyroll: Original Pantalla" data-months="1">
                     <div class="image-container brand-bg-crunchyroll">
-                        <img src="https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL" alt="Logo Crunchyroll" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://www.crunchyroll.com/build/assets/img/favicons/apple-touch-icon.png" alt="Logo Crunchyroll" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Crunchyroll: Original Pantalla</h3>
-                        <p class="description">Pantalla original de Crunchyroll por 1 mes.</p>
+                        <p class="description">Pantalla original de Crunchyroll.</p>
+                        <span class="duration"></span>
                         <div class="price">$11.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🍣">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Entretenimiento" data-product-name="Crunchyroll: Original Completa" data-months="1">
                     <div class="image-container brand-bg-crunchyroll">
-                        <img src="https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL" alt="Logo Crunchyroll" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://www.crunchyroll.com/build/assets/img/favicons/apple-touch-icon.png" alt="Logo Crunchyroll" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Crunchyroll: Original Completa</h3>
-                        <p class="description">Cuenta completa original de Crunchyroll por 1 mes.</p>
+                        <p class="description">Cuenta completa original de Crunchyroll.</p>
+                        <span class="duration"></span>
                         <div class="price">$13.600</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🍣">Comprar</a>
                     </div>
                 </div>
 
-                <!-- Disney+ --><div class="product-card">
+                <!-- Disney+ --><div class="product-card" data-product-type="Entretenimiento" data-product-name="Disney+: Pantalla Original Estándar" data-months="1">
                     <div class="image-container brand-bg-disney">
-                        <!-- Logo Image Placeholder (Disney+) --><img src="https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
+                        <!-- Logo Image Placeholder (Disney+) --><img src="https://logolook.net/wp-content/uploads/2021/10/Disney-Logo.png" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Disney+: Pantalla Original Estándar</h3>
-                        <p class="description">Pantalla estándar (Original) de Disney+ por 1 mes.</p>
+                        <p class="description">Pantalla estándar (Original) de Disney+.</p>
+                        <span class="duration"></span>
                         <div class="price">$15.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🐭">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Entretenimiento" data-product-name="Disney+: Completa Original Estándar" data-months="1">
                     <div class="image-container brand-bg-disney">
-                        <img src="https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2021/10/Disney-Logo.png" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Disney+: Completa Original Estándar</h3>
-                        <p class="description">Cuenta completa estándar (Original) de Disney+ por 1 mes.</p>
+                        <p class="description">Cuenta completa estándar (Original) de Disney+.</p>
+                        <span class="duration"></span>
                         <div class="price">$30.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🐭">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Entretenimiento" data-product-name="Disney+: Pantalla Premium Genérica" data-months="1">
                     <div class="image-container brand-bg-disney">
-                        <img src="https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2021/10/Disney-Logo.png" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Disney+: Pantalla Premium Genérica</h3>
-                        <p class="description">Pantalla Premium (Genérica) de Disney+ por 1 mes.</p>
+                        <p class="description">Pantalla Premium (Genérica) de Disney+.</p>
+                        <span class="duration"></span>
                         <div class="price">$20.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🐭">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Entretenimiento" data-product-name="Disney+: Completa Premium Genérica" data-months="1">
                     <div class="image-container brand-bg-disney">
-                        <img src="https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2021/10/Disney-Logo.png" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Disney+: Completa Premium Genérica</h3>
-                        <p class="description">Cuenta completa Premium (Genérica) de Disney+ por 1 mes.</p>
+                        <p class="description">Cuenta completa Premium (Genérica) de Disney+.</p>
+                        <span class="duration"></span>
                         <div class="price">$39.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🐭">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Entretenimiento" data-product-name="Disney+: Pantalla Premium Original" data-months="1">
                     <div class="image-container brand-bg-disney">
-                        <img src="https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2021/10/Disney-Logo.png" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Disney+: Pantalla Premium Original</h3>
-                        <p class="description">Pantalla Premium (Original) de Disney+ por 1 mes.</p>
+                        <p class="description">Pantalla Premium (Original) de Disney+.</p>
+                        <span class="duration"></span>
                         <div class="price">$45.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🐭">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Entretenimiento" data-product-name="Disney+: Completa Premium Original" data-months="1">
                     <div class="image-container brand-bg-disney">
-                        <img src="https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2021/10/Disney-Logo.png" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Disney+: Completa Premium Original</h3>
-                        <p class="description">Cuenta completa Premium (Original) de Disney+ por 1 mes.</p>
+                        <p class="description">Cuenta completa Premium (Original) de Disney+.</p>
+                        <span class="duration"></span>
                         <div class="price">$46.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🐭">Comprar</a>
                     </div>
                 </div>
             </div>
 
             <!-- Sección: MÚSICA --><h2 class="category-title" id="musica">🎵 MÚSICA</h2>
             <div class="product-grid">
-                <!-- YouTube Premium --><div class="product-card">
+                <!-- YouTube Premium --><div class="product-card" data-product-type="Música" data-product-name="YouTube Premium" data-months="1">
                     <div class="image-container brand-bg-youtube">
-                        <!-- Logo Image Placeholder (YouTube Premium) --><img src="https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM" alt="Logo YouTube Premium" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM'; this.classList.remove('brand-logo-img');" />
+                        <!-- Logo Image Placeholder (YouTube Premium) --><img src="https://logolook.net/wp-content/uploads/2023/07/YouTube-Premium-Logo.png" alt="Logo YouTube Premium" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>YouTube Premium: 1 Mes</h3>
-                        <p class="description">Acceso a YouTube Premium por 1 mes.</p>
+                        <p class="description">Acceso a YouTube Premium.</p>
+                        <span class="duration"></span>
                         <div class="price">$10.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="▶️">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Música" data-product-name="YouTube Premium" data-months="3">
                     <div class="image-container brand-bg-youtube">
-                        <img src="https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM" alt="Logo YouTube Premium" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2023/07/YouTube-Premium-Logo.png" alt="Logo YouTube Premium" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>YouTube Premium: 3 Meses</h3>
-                        <p class="description">Acceso a YouTube Premium por 3 meses.</p>
+                        <p class="description">Acceso a YouTube Premium.</p>
+                        <span class="duration"></span>
                         <div class="price">$30.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="▶️">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Música" data-product-name="YouTube Premium" data-months="4">
                     <div class="image-container brand-bg-youtube">
-                        <img src="https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM" alt="Logo YouTube Premium" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2023/07/YouTube-Premium-Logo.png" alt="Logo YouTube Premium" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>YouTube Premium: 4 Meses</h3>
-                        <p class="description">Acceso a YouTube Premium por 4 meses.</p>
+                        <p class="description">Acceso a YouTube Premium.</p>
+                        <span class="duration"></span>
                         <div class="price">$66.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="▶️">Comprar</a>
                     </div>
                 </div>
 
-                <!-- Deezer Premium --><div class="product-card">
+                <!-- Deezer Premium --><div class="product-card" data-product-type="Música" data-product-name="Deezer Premium" data-months="1">
                     <div class="image-container brand-bg-deezer">
-                        <!-- Logo Image Placeholder (Deezer Premium) --><img src="https://placehold.co/400x160/00c7e2/1a1a1a?text=DEEZER" alt="Logo Deezer Premium" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00c7e2/1a1a1a?text=DEEZER'; this.classList.remove('brand-logo-img');" />
+                        <!-- Logo Image Placeholder (Deezer Premium) --><img src="https://logolook.net/wp-content/uploads/2023/04/Deezer-Logo.png" alt="Logo Deezer Premium" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00c7e2/1a1a1a?text=DEEZER'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Deezer Premium: 1 Mes</h3>
-                        <p class="description">Acceso a Deezer Premium por 1 mes.</p>
+                        <p class="description">Acceso a Deezer Premium.</p>
+                        <span class="duration"></span>
                         <div class="price">$10.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🎶">Comprar</a>
                     </div>
                 </div>
 
-                <!-- Spotify --><div class="product-card">
+                <!-- Spotify --><div class="product-card" data-product-type="Música" data-product-name="Spotify Premium" data-months="1">
                     <div class="image-container brand-bg-spotify">
-                        <!-- Logo Image Placeholder (Spotify) --><img src="https://placehold.co/400x160/1ed760/000000?text=SPOTIFY" alt="Logo Spotify" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/1ed760/000000?text=SPOTIFY'; this.classList.remove('brand-logo-img');" />
+                        <!-- Logo Image Placeholder (Spotify) --><img src="https://logolook.net/wp-content/uploads/2023/09/Spotify-Logo.png" alt="Logo Spotify" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/1ed760/000000?text=SPOTIFY'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Spotify: 1 Mes</h3>
-                        <p class="description">Acceso a Spotify Premium por 1 mes.</p>
+                        <p class="description">Acceso a Spotify Premium.</p>
+                        <span class="duration"></span>
                         <div class="price">$13.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🎧">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Música" data-product-name="Spotify Premium" data-months="2">
                     <div class="image-container brand-bg-spotify">
-                        <img src="https://placehold.co/400x160/1ed760/000000?text=SPOTIFY" alt="Logo Spotify" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/1ed760/000000?text=SPOTIFY'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2023/09/Spotify-Logo.png" alt="Logo Spotify" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/1ed760/000000?text=SPOTIFY'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Spotify: 2 Meses</h3>
-                        <p class="description">Acceso a Spotify Premium por 2 meses.</p>
+                        <p class="description">Acceso a Spotify Premium.</p>
+                        <span class="duration"></span>
                         <div class="price">$24.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🎧">Comprar</a>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-product-type="Música" data-product-name="Spotify Premium" data-months="3">
                     <div class="image-container brand-bg-spotify">
-                        <img src="https://placehold.co/400x160/1ed760/000000?text=SPOTIFY" alt="Logo Spotify" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/1ed760/000000?text=SPOTIFY'; this.classList.remove('brand-logo-img');" />
+                        <img src="https://logolook.net/wp-content/uploads/2023/09/Spotify-Logo.png" alt="Logo Spotify" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/1ed760/000000?text=SPOTIFY'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Spotify: 3 Meses</h3>
-                        <p class="description">Acceso a Spotify Premium por 3 meses.</p>
+                        <p class="description">Acceso a Spotify Premium.</p>
+                        <span class="duration"></span>
                         <div class="price">$35.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🎧">Comprar</a>
                     </div>
                 </div>
 
-                <!-- Apple Music --><div class="product-card">
+                <!-- Apple Music --><div class="product-card" data-product-type="Música" data-product-name="Apple Music: 1 Mes (Android)" data-months="1">
                     <div class="image-container brand-bg-applemusic">
-                        <!-- Logo Image Placeholder (Apple Music) --><img src="https://placehold.co/400x160/fa2139/ffffff?text=Apple+Music" alt="Logo Apple Music" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/fa2139/ffffff?text=Apple+Music'; this.classList.remove('brand-logo-img');" />
+                        <!-- Logo Image Placeholder (Apple Music) --><img src="https://logolook.net/wp-content/uploads/2023/06/Apple-Music-Logo.png" alt="Logo Apple Music" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/fa2139/ffffff?text=Apple+Music'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Apple Music: 1 Mes (Android)</h3>
-                        <p class="description">Membresía Apple Music por 1 mes (solo para Android).</p>
+                        <p class="description">Membresía Apple Music (solo para Android).</p>
+                        <span class="duration"></span>
                         <div class="price">$12.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🍎🎵">Comprar</a>
                     </div>
                 </div>
             </div>
 
             <!-- Sección: INTELIGENCIA ARTIFICIAL --><h2 class="category-title" id="ia">🤖 INTELIGENCIA ARTIFICIAL</h2>
             <div class="product-grid">
-                <!-- ChatGPT Plus --><div class="product-card">
+                <!-- ChatGPT Plus --><div class="product-card" data-product-type="IA" data-product-name="ChatGPT Plus" data-months="1">
                     <div class="image-container brand-bg-chatgpt">
-                        <!-- Logo Image Placeholder (ChatGPT Plus) --><img src="https://placehold.co/400x160/10a37f/ffffff?text=ChatGPT+Plus" alt="Logo ChatGPT Plus" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/10a37f/ffffff?text=ChatGPT+Plus'; this.classList.remove('brand-logo-img');" />
+                        <!-- Logo Image Placeholder (ChatGPT Plus) --><img src="https://logolook.net/wp-content/uploads/2023/10/ChatGPT-Logo.png" alt="Logo ChatGPT Plus" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/10a37f/ffffff?text=ChatGPT+Plus'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>ChatGPT Plus: 1 Mes</h3>
-                        <p class="description">Acceso a la suscripción ChatGPT Plus (1 mes).</p>
+                        <p class="description">Acceso a la suscripción ChatGPT Plus.</p>
+                        <span class="duration"></span>
                         <div class="price">$59.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🧠">Comprar</a>
                     </div>
                 </div>
 
-                <!-- Gemini (Google AI) --><div class="product-card">
+                <!-- Gemini (Google AI) --><div class="product-card" data-product-type="IA" data-product-name="Gemini (Google AI)" data-months="1">
                     <div class="image-container brand-bg-gemini">
-                        <!-- Logo Image Placeholder (Gemini AI) --><img src="https://placehold.co/400x160/1a1a1a/4285F4?text=GEMINI+AI" alt="Logo Gemini AI" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/1a1a1a/4285F4?text=GEMINI+AI'; this.classList.remove('brand-logo-img');" />
+                        <!-- Logo Image Placeholder (Gemini AI) --><img src="https://seeklogo.com/images/G/google-gemini-logo-5986D00D00-seeklogo.com.png" alt="Logo Gemini AI" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/1a1a1a/4285F4?text=GEMINI+AI'; this.classList.remove('brand-logo-img');" />
                     </div>
                     <div class="product-info">
                         <h3>Gemini (Google AI): 1 Mes</h3>
-                        <p class="description">Acceso a la suite de Inteligencia Artificial de Google (1 mes).</p>
+                        <p class="description">Acceso a la suite de Inteligencia Artificial de Google.</p>
+                        <span class="duration"></span>
                         <div class="price">$59.000</div>
-                        <button class="action-btn">Comprar</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="✨">Comprar</a>
                     </div>
                 </div>
             </div>
@@ -807,68 +850,68 @@
             <p style="color: #ff8c00; font-weight: 600; margin-bottom: 15px; font-size: 0.9em;">(Disponibles hasta el 24 de octubre)</p>
             <div class="product-grid">
                 
-                <!-- HBO Max + Paramount --><div class="product-card">
+                <!-- HBO Max + Paramount --><div class="product-card" data-product-type="Combo" data-product-name="Combo HBO Max + Paramount">
                     <span class="combo-label">COMBO 🔥</span>
                     <div class="image-container brand-bg-combo">
-                           <!-- HBO Max + Paramount (Dual Logo Placeholder) --><img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/92278f/00329c?text=HBO+MAX+%2B+PARAMOUNT" alt="Combo HBO Max + Paramount" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BParamount'; this.classList.remove('brand-logo-img');">
+                           <!-- HBO Max + Paramount (Dual Logo Placeholder) --><img class="brand-logo-img" style="padding: 10px; background: none;" src="https://img.icons8.com/?size=512&id=vGz4vWlU0iNq&format=png" alt="Combo HBO Max + Paramount" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BParamount'; this.classList.remove('brand-logo-img');">
                     </div>
                     <div class="product-info">
                         <h3>HBO Max + Paramount</h3>
                         <p class="description">Acceso a ambas plataformas por un precio especial.</p>
                         <div class="price">$17.000</div>
-                        <button class="action-btn">Comprar Combo</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🤩">Comprar Combo</a>
                     </div>
                 </div>
 
-                <!-- HBO Max + Prime --><div class="product-card">
+                <!-- HBO Max + Prime --><div class="product-card" data-product-type="Combo" data-product-name="Combo HBO Max + Prime Video">
                     <span class="combo-label">COMBO 🔥</span>
                     <div class="image-container brand-bg-combo">
-                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/92278f/00a8e1?text=HBO+MAX+%2B+PRIME" alt="Combo HBO Max + Prime" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BPrime'; this.classList.remove('brand-logo-img');">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://img.icons8.com/?size=512&id=107384&format=png" alt="Combo HBO Max + Prime" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BPrime'; this.classList.remove('brand-logo-img');">
                     </div>
                     <div class="product-info">
                         <h3>HBO Max + Prime</h3>
                         <p class="description">Acceso a HBO Max y Amazon Prime Video.</p>
                         <div class="price">$17.000</div>
-                        <button class="action-btn">Comprar Combo</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🤩">Comprar Combo</a>
                     </div>
                 </div>
 
-                <!-- HBO Max + Disney --><div class="product-card">
+                <!-- HBO Max + Disney --><div class="product-card" data-product-type="Combo" data-product-name="Combo HBO Max + Disney+">
                     <span class="combo-label">COMBO 🔥</span>
                     <div class="image-container brand-bg-combo">
-                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/92278f/02022d?text=HBO+MAX+%2B+DISNEY" alt="Combo HBO Max + Disney" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BDisney'; this.classList.remove('brand-logo-img');">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://img.icons8.com/?size=512&id=vGz4vWlU0iNq&format=png" alt="Combo HBO Max + Disney" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BDisney'; this.classList.remove('brand-logo-img');">
                     </div>
                     <div class="product-info">
                         <h3>HBO Max + Disney+</h3>
                         <p class="description">Disfruta de la mejor programación de HBO y Disney.</p>
                         <div class="price">$17.000</div>
-                        <button class="action-btn">Comprar Combo</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🤩">Comprar Combo</a>
                     </div>
                 </div>
 
-                <!-- HBO Max + Universal+ --><div class="product-card">
+                <!-- HBO Max + Universal+ --><div class="product-card" data-product-type="Combo" data-product-name="Combo HBO Max + Universal+">
                     <span class="combo-label">COMBO 🔥</span>
                     <div class="image-container brand-bg-combo">
-                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/92278f/000000?text=HBO+MAX+%2B+UNIVERSAL%2B" alt="Combo HBO Max + Universal+" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BUniversal'; this.classList.remove('brand-logo-img');">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://img.icons8.com/?size=512&id=vGz4vWlU0iNq&format=png" alt="Combo HBO Max + Universal+" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BUniversal'; this.classList.remove('brand-logo-img');">
                     </div>
                     <div class="product-info">
                         <h3>HBO Max + Universal+</h3>
                         <p class="description">Acceso a HBO Max y el contenido de Universal+.</p>
                         <div class="price">$18.000</div>
-                        <button class="action-btn">Comprar Combo</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🤩">Comprar Combo</a>
                     </div>
                 </div>
 
-                <!-- HBO Max + ViX --><div class="product-card">
+                <!-- HBO Max + ViX --><div class="product-card" data-product-type="Combo" data-product-name="Combo HBO Max + ViX">
                     <span class="combo-label">COMBO 🔥</span>
                     <div class="image-container brand-bg-combo">
-                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/92278f/ff0070?text=HBO+MAX+%2B+VIX" alt="Combo HBO Max + ViX" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BViX'; this.classList.remove('brand-logo-img');">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://img.icons8.com/?size=512&id=vGz4vWlU0iNq&format=png" alt="Combo HBO Max + ViX" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BViX'; this.classList.remove('brand-logo-img');">
                     </div>
                     <div class="product-info">
                         <h3>HBO Max + ViX</h3>
                         <p class="description">Acceso a HBO Max y la plataforma de ViX.</p>
                         <div class="price">$17.000</div>
-                        <button class="action-btn">Comprar Combo</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🤩">Comprar Combo</a>
                     </div>
                 </div>
             </div>
@@ -880,55 +923,55 @@
 
             <div class="product-grid">
                 
-                <!-- Netflix + Crunchyroll --><div class="product-card">
+                <!-- Netflix + Crunchyroll --><div class="product-card" data-product-type="Combo" data-product-name="Combo Netflix + Crunchyroll">
                     <span class="combo-label">COMBO 🍿</span>
                     <div class="image-container brand-bg-combo">
-                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/e50914/f48a06?text=NETFLIX+%2B+CRUNCHYROLL" alt="Combo Netflix + Crunchyroll" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Netflix%2BCrunchyroll'; this.classList.remove('brand-logo-img');">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://img.icons8.com/?size=512&id=107384&format=png" alt="Combo Netflix + Crunchyroll" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Netflix%2BCrunchyroll'; this.classList.remove('brand-logo-img');">
                     </div>
                     <div class="product-info">
                         <h3>Netflix + Crunchyroll</h3>
                         <p class="description">El mejor cine y series con el mejor anime.</p>
                         <div class="price">$20.000</div>
-                        <button class="action-btn">Comprar Combo</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🍿">Comprar Combo</a>
                     </div>
                 </div>
 
-                <!-- Netflix + Prime Video --><div class="product-card">
+                <!-- Netflix + Prime Video --><div class="product-card" data-product-type="Combo" data-product-name="Combo Netflix + Prime Video">
                     <span class="combo-label">COMBO 🍿</span>
                     <div class="image-container brand-bg-combo">
-                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/e50914/00a8e1?text=NETFLIX+%2B+PRIME+VIDEO" alt="Combo Netflix + Prime Video" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Netflix%2BPrime'; this.classList.remove('brand-logo-img');">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://img.icons8.com/?size=512&id=107384&format=png" alt="Combo Netflix + Prime Video" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Netflix%2BPrime'; this.classList.remove('brand-logo-img');">
                     </div>
                     <div class="product-info">
                         <h3>Netflix + Prime Video</h3>
                         <p class="description">Doble entretenimiento de las plataformas líderes.</p>
                         <div class="price">$20.000</div>
-                        <button class="action-btn">Comprar Combo</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🍿">Comprar Combo</a>
                     </div>
                 </div>
 
-                <!-- Netflix + Disney+ --><div class="product-card">
+                <!-- Netflix + Disney+ --><div class="product-card" data-product-type="Combo" data-product-name="Combo Netflix + Disney+">
                     <span class="combo-label">COMBO 🍿</span>
                     <div class="image-container brand-bg-combo">
-                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/e50914/02022d?text=NETFLIX+%2B+DISNEY%2B" alt="Combo Netflix + Disney+" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Netflix%2BDisney'; this.classList.remove('brand-logo-img');">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://img.icons8.com/?size=512&id=107384&format=png" alt="Combo Netflix + Disney+" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Netflix%2BDisney'; this.classList.remove('brand-logo-img');">
                     </div>
                     <div class="product-info">
                         <h3>Netflix + Disney+</h3>
                         <p class="description">Acceso a Netflix y todo el catálogo de Disney.</p>
                         <div class="price">$22.000</div>
-                        <button class="action-btn">Comprar Combo</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🍿">Comprar Combo</a>
                     </div>
                 </div>
 
-                <!-- Netflix + Max (HBO) --><div class="product-card">
+                <!-- Netflix + Max (HBO) --><div class="product-card" data-product-type="Combo" data-product-name="Combo Netflix + Max (HBO)">
                     <span class="combo-label">COMBO 🍿</span>
                     <div class="image-container brand-bg-combo">
-                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/e50914/92278f?text=NETFLIX+%2B+MAX+(HBO)" alt="Combo Netflix + Max (HBO)" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Netflix%2BMax'; this.classList.remove('brand-logo-img');">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://img.icons8.com/?size=512&id=107384&format=png" alt="Combo Netflix + Max (HBO)" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Netflix%2BMax'; this.classList.remove('brand-logo-img');">
                     </div>
                     <div class="product-info">
                         <h3>Netflix + Max (HBO)</h3>
                         <p class="description">Lo mejor del cine y las series originales de HBO.</p>
                         <div class="price">$20.000</div>
-                        <button class="action-btn">Comprar Combo</button>
+                        <a href="#" class="action-btn buy-button" data-emoji="🍿">Comprar Combo</a>
                     </div>
                 </div>
             </div>
@@ -995,6 +1038,40 @@
 
         // Asignar el listener al input de búsqueda (asegúrate de que el input tenga el id='searchInput')
         document.getElementById('searchInput').addEventListener('input', filterProducts);
+
+
+        // NUEVA LÓGICA: Añadir duración y enlaces de WhatsApp
+        document.addEventListener('DOMContentLoaded', () => {
+            const products = document.querySelectorAll('.product-card');
+            const whatsappNumber = '573223353049'; // Tu número de WhatsApp
+
+            products.forEach(card => {
+                const productName = card.dataset.productName;
+                const productType = card.dataset.productType;
+                const months = card.dataset.months;
+                const emoji = card.querySelector('.buy-button').dataset.emoji; // Obtener el emoji del botón
+
+                const durationSpan = card.querySelector('.duration');
+                if (durationSpan && months && productType !== 'Combo') { // Solo si no es combo y tiene meses
+                    durationSpan.textContent = `x${months} ${months === '1' ? 'mes' : 'meses'}`;
+                } else if (durationSpan) {
+                     durationSpan.style.display = 'none'; // Ocultar si no hay duración o es combo
+                }
+
+                const buyButton = card.querySelector('.buy-button');
+                if (buyButton) {
+                    let message = `¡Hola! ${emoji} Me gustaría obtener información sobre el producto: *${productName}*. `;
+                    if (months && productType !== 'Combo') {
+                        message += `Es de ${months} ${months === '1' ? 'mes' : 'meses'}.`;
+                    } else {
+                        message += `¿Podrías darme más detalles?`;
+                    }
+                    const encodedMessage = encodeURIComponent(message);
+                    buyButton.href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+                    buyButton.target = '_blank'; // Abrir en una nueva pestaña
+                }
+            });
+        });
     </script>
 </body>
 </html>
