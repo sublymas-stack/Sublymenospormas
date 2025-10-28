@@ -1,510 +1,990 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Catálogo Subly+</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subly+ Marketplace - Catálogo Completo</title>
+    <!-- Tailwind CDN is not used, sticking to custom CSS for aesthetic control --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --dark-bg: #0a0a0a;
-            --card-bg: #1a1a1a;
-            --text: #f0f0f0;
-            --muted: #a0a0a0;
-            --accent: #00C4FF;
-            --border: #333;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: var(--dark-bg);
-            color: var(--text);
+            --dark-bg-subtle: #0a0a0a; /* Fondo muy oscuro, casi negro */
+            --dark-bg: #1a1a1a; /* Fondo primario del panel / Header */
+            --dark-card: #1e1e1e; /* Fondo de las tarjetas de producto */
+            --dark-text: #f0f0f0; /* Texto principal brillante */
+            --dark-muted: #a0a0a0; /* Texto secundario/descripciones */
+            --accent-blue: #00C4FF; /* Electric Blue/Cyan - Nuevo acento moderno */
+            --accent-glow: 0 0 10px rgba(0, 196, 255, 0.3); /* Sombra de brillo para hover (más sutil) */
+            --accent-red: #dc3545;
+            --header-height: 65px; /* Altura de la barra superior (más compacta) */
             font-family: 'Inter', sans-serif;
-            padding-top: 70px;
+            color-scheme: dark;
+            font-size: 15px; /* Base font-size ligeramente más pequeño */
         }
-        header {
+
+        body {
+            margin: 0;
+            background-color: var(--dark-bg-subtle);
+            color: var(--dark-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-top: var(--header-height); /* Espacio para el header fijo */
+        }
+        
+        /* --- Header Top Fijo --- */
+        .top-header-navigation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 70px;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
+            z-index: 1000;
+            background-color: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4); /* Sombra más sutil */
+        }
+
+        .header-main-bar {
+            height: var(--header-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            height: 28px; /* Logo ligeramente más pequeño */
+            width: auto; /* Mantener proporción */
+            filter: drop-shadow(0 0 4px rgba(0, 196, 255, 0.4)); /* Sombra más sutil */
+        }
+
+        .contact-info {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
+            gap: 12px; /* Espacio entre elementos */
+            font-size: 0.85em; /* Texto de contacto más pequeño */
+            color: var(--dark-muted);
         }
-        .logo {
-            height: 36px;
-            filter: drop-shadow(0 0 5px rgba(0, 196, 255, 0.5));
+        .contact-info strong {
+            color: var(--accent-blue);
         }
-        nav ul {
+        .contact-info svg {
+            width: 18px; /* Icono de Instagram más pequeño */
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+        
+        .main-nav-links {
             display: flex;
             list-style: none;
-            gap: 18px;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 0 10px;
+            padding: 0;
+            margin: 0;
         }
-        nav a {
-            color: var(--muted);
+
+        .main-nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 6px; /* Espacio entre icono y texto */
+            padding: 8px 12px; /* Padding de enlaces más pequeño */
+            color: var(--dark-muted);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95em;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: color 0.2s;
+            font-weight: 500;
+            font-size: 0.95em; /* Texto de navegación más pequeño */
+            transition: color 0.2s, background-color 0.2s;
         }
-        nav a:hover, nav a.active {
-            color: var(--accent);
+        .main-nav-links a svg {
+            width: 18px; /* Iconos de navegación más pequeños */
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
         }
-        .content {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 20px;
+
+        .main-nav-links a:hover, .main-nav-links a.active {
+            color: var(--accent-blue);
+            border-bottom: 2px solid var(--accent-blue); /* Borde más delgado */
+            padding-bottom: 6px; /* Ajuste para el borde */
         }
-        .section-title {
-            font-size: 1.8em;
-            font-weight: 800;
-            color: var(--accent);
-            margin: 40px 0 20px;
-            padding-bottom: 6px;
-            border-bottom: 2px solid rgba(0, 196, 255, 0.3);
-        }
-        .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-        .product {
-            background: var(--card-bg);
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid transparent;
-        }
-        .product:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 196, 255, 0.3);
-            border-color: var(--accent);
-        }
-        .product img {
-            width: 100%;
-            height: 120px;
-            object-fit: contain;
-            padding: 15px;
-            background: #000;
-        }
-        .info {
-            padding: 16px;
-        }
-        .info h3 {
-            font-size: 1.05em;
-            margin-bottom: 6px;
-            font-weight: 700;
-        }
-        .info p {
-            font-size: 0.85em;
-            color: var(--muted);
-            margin-bottom: 10px;
-        }
-        .price {
-            font-size: 1.25em;
-            font-weight: 800;
-            color: var(--accent);
-            margin: 8px 0;
-        }
-        .buy {
+        
+        .nav-link-item {
             display: block;
+        }
+
+        .toggle-nav-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark-text);
+            font-size: 22px; /* Botón de toggle ligeramente más pequeño */
+            cursor: pointer;
+        }
+
+        /* --- Contenido Principal --- */
+        .main-content {
+            flex-grow: 1;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-area {
+            flex-grow: 1;
+            padding: 25px 20px; /* Padding del área de contenido */
+            max-width: 1400px;
             width: 100%;
-            padding: 10px;
-            background: var(--accent);
-            color: #000;
-            font-weight: 700;
-            text-align: center;
-            text-decoration: none;
+            margin: 0 auto;
+        }
+
+        /* --- Estilos Generales --- */
+        .breadcrumb {
+            color: var(--dark-muted);
+            margin-bottom: 18px; /* Margen ligeramente reducido */
+            font-size: 0.85em; /* Breadcrumb más pequeño */
+        }
+
+        .shop-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px; /* Margen ligeramente reducido */
+            flex-wrap: wrap;
+            gap: 12px; /* Espacio entre elementos del header */
+        }
+        
+        .category-title {
+            font-size: 1.6em; /* Título de categoría más pequeño */
+            font-weight: 800;
+            color: var(--accent-blue);
+            margin: 25px 0 12px 0; /* Márgenes ajustados */
+            border-bottom: 2px solid rgba(0, 196, 255, 0.3);
+            padding-bottom: 4px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            background-color: var(--dark-card);
+            border: 1px solid #444;
+            padding: 10px 15px 10px 35px; /* Padding ajustado */
+            border-radius: 8px; /* Border-radius ligeramente más pequeño */
+            color: var(--dark-text);
+            width: 250px; /* Ancho del input de búsqueda */
+            font-size: 0.9em; /* Texto del input más pequeño */
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .search-box input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 4px rgba(0, 196, 255, 0.4); /* Sombra más sutil */
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 10px; /* Posición del icono ajustada */
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-muted);
+            width: 18px; /* Icono de búsqueda más pequeño */
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .filters {
+            display: flex;
+            gap: 12px; /* Espacio entre filtros */
+            align-items: center;
+        }
+
+        .filters select {
+            background-color: var(--dark-card);
+            border: 1px solid #444;
+            padding: 8px 12px; /* Padding del select ajustado */
+            border-radius: 8px; /* Border-radius ligeramente más pequeño */
+            color: var(--dark-text);
+            outline: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23f0f0f0'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center; /* Posición del icono ajustada */
+            padding-right: 30px; /* Padding para el icono */
+            font-size: 0.9em; /* Texto del select más pequeño */
+        }
+        
+        .view-toggle button {
+            padding: 8px;
             border-radius: 8px;
-            margin-top: 8px;
-            transition: background 0.2s;
         }
-        .buy:hover {
-            background: #00B0E6;
+        .view-toggle svg {
+            width: 18px;
+            height: 18px;
         }
-        footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: var(--muted);
-            border-top: 1px solid var(--border);
-            margin-top: 20px;
-            font-size: 0.95em;
+
+        /* Product Cards */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Min-width de tarjeta ligeramente menor */
+            gap: 25px; /* Espacio entre tarjetas */
+            margin-bottom: 30px; /* Margen inferior */
         }
+        .product-card {
+            background-color: var(--dark-card);
+            border-radius: 12px; /* Border-radius más pequeño */
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra más sutil */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid transparent; /* Borde más delgado */
+        }
+        .product-card:hover {
+            transform: translateY(-6px) scale(1.01); /* Elevación y escala ligeramente menores */
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), var(--accent-glow);
+            border-color: var(--accent-blue);
+        }
+        .product-card .combo-label {
+            top: 10px; /* Posición de la etiqueta */
+            left: 10px;
+            padding: 5px 10px; /* Padding más pequeño */
+            border-radius: 6px;
+            font-size: 0.8em; /* Tamaño de fuente de la etiqueta */
+        }
+        .product-card .image-container {
+            width: 100%;
+            height: 160px; /* Altura de la imagen reducida */
+            background-color: #000; /* Default fallback */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #333;
+        }
+        /* Style for brand logos placeholders */
+        .brand-logo-img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            padding: 20px; /* Padding para que el logo se vea centrado y no toque los bordes */
+            background-color: #1a1a1a; /* Fondo de la imagen por defecto */
+        }
+        /* Specific brand background colors for fallback aesthetics if image fails */
+        .brand-bg-appletv { background-color: #000000; }
+        .brand-bg-paramount { background-color: #00329c; }
+        .brand-bg-crunchyroll { background-color: #f48a06; }
+        .brand-bg-disney { background-color: #00002f; }
+        .brand-bg-youtube { background-color: #ff0000; }
+        .brand-bg-deezer { background-color: #00c7e2; }
+        .brand-bg-spotify { background-color: #1ed760; }
+        .brand-bg-applemusic { background-color: #fa2139; }
+        .brand-bg-chatgpt { background-color: #10a37f; }
+        .brand-bg-gemini { background: linear-gradient(135deg, #4285F4, #34A853, #FBBC05, #EA4335); }
+        .brand-bg-combo { background-color: #2a2a2a; }
+
+        .product-info {
+            padding: 15px; /* Padding de la información del producto */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .product-info h3 {
+            font-size: 1.1em; /* Título del producto más pequeño */
+            margin: 0 0 4px;
+            font-weight: 700;
+        }
+        .product-info p.description {
+            font-size: 0.8em; /* Descripción más pequeña */
+            margin-bottom: 10px; /* Margen inferior */
+            flex-grow: 1;
+        }
+        .product-info .price {
+            font-size: 1.3em; /* Precio más pequeño */
+            margin-bottom: 12px;
+        }
+        .product-info .action-btn {
+            padding: 10px 15px; /* Padding del botón más pequeño */
+            border-radius: 8px; /* Border-radius más pequeño */
+            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(0, 196, 255, 0.3); /* Sombra más sutil */
+        }
+        .product-info .action-btn:not(.disabled):hover {
+            box-shadow: var(--accent-glow);
+            transform: translateY(-1px);
+        }
+
+        /* Media Queries para Responsividad */
+        @media (max-width: 1024px) {
+            :root {
+                font-size: 14px; /* Font-size base para tablets */
+                --header-height: 60px; /* Header un poco más pequeño en tablets */
+            }
+            body {
+                padding-top: var(--header-height);
+            }
+            .header-main-bar {
+                padding: 0 15px;
+            }
+            .logo {
+                height: 25px;
+            }
+            .toggle-nav-btn {
+                font-size: 20px;
+            }
+            .main-nav-links {
+                top: 60px; /* Ajuste para la nueva altura del header */
+                padding: 8px 0;
+            }
+            .main-nav-links a {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+            .content-area {
+                padding: 20px 15px;
+            }
+            .search-box input {
+                width: 200px; /* Ancho del search box en tablets */
+            }
+        }
+
         @media (max-width: 768px) {
-            .products {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 18px;
+            :root {
+                font-size: 13px; /* Font-size base para móviles */
+                --header-height: 55px; /* Header más pequeño en móviles */
             }
-            .product img {
-                height: 100px;
+            body {
+                padding-top: var(--header-height);
             }
-            nav ul {
-                gap: 12px;
+            .header-main-bar {
+                padding: 0 10px;
+            }
+            .logo {
+                height: 22px;
+            }
+            .toggle-nav-btn {
+                font-size: 18px;
+            }
+            .main-nav-links {
+                top: 55px; /* Ajuste para la nueva altura del header */
+            }
+            .main-nav-links a {
+                padding: 8px 10px;
+                font-size: 0.85em;
+            }
+            .content-area {
+                padding: 15px 10px;
+            }
+            .shop-header {
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+            .category-title {
+                font-size: 1.4em;
+                margin: 20px 0 10px 0;
+            }
+            .search-box input {
+                width: 100%;
+                padding: 8px 12px 8px 30px;
+                font-size: 0.85em;
+            }
+            .search-box svg {
+                left: 8px;
+                width: 16px;
+                height: 16px;
+            }
+            .filters select {
+                padding: 7px 10px;
+                font-size: 0.85em;
+                background-position: right 7px center;
+                padding-right: 25px;
+            }
+            .view-toggle button {
+                padding: 6px;
+            }
+            .view-toggle svg {
+                width: 16px;
+                height: 16px;
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Min-width más pequeño para móvil */
+                gap: 15px;
+            }
+            .product-card {
+                border-radius: 10px;
+            }
+            .product-card .image-container {
+                height: 120px; /* Altura de imagen más pequeña */
+            }
+            .product-info {
+                padding: 10px;
+            }
+            .product-info h3 {
+                font-size: 1em;
+            }
+            .product-info p.description {
+                font-size: 0.75em;
+            }
+            .product-info .price {
+                font-size: 1.1em;
+            }
+            .product-info .action-btn {
+                padding: 8px 10px;
+                font-size: 0.9em;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMzAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCAxMzAgNDAiPgogIDxyZWN0IHdpZHRoPSIxMzAiIGhlaWdodD0iNDAiIHJ4PSI4IiBmaWxsPSIjMDAzMDRmIi8+CiAgPHRleHQgeD0iMTAiIHk9IjI3IiBmb250LWZhbWlseT0iSW50ZXIsIEFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjMDBDNFFFZiIgZm9udC13ZWlnaHQ9IjgwMCI+U1VCTFkrPC90ZXh0Pgo8L3N2Zz4=" alt="Subly+" class="logo">
-        <nav>
-            <ul>
-                <li><a href="#" class="active">Inicio</a></li>
-                <li><a href="#entretenimiento">🎬 Entretenimiento</a></li>
-                <li><a href="#musica">🎵 Música</a></li>
-                <li><a href="#ia">🤖 IA</a></li>
-                <li><a href="#combos">🎁 Combos</a></li>
+
+    <!-- Nuevo Header Fijo Superior --><header class="top-header-navigation" id="topHeaderNav">
+        <div class="header-main-bar">
+            <!-- Logo --><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAxMjAgMzAiPgogIDx0ZXh0IHg9IjUiIHy9IjIyIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiMwMEM0RkYiPlNVQkxZKzwvdGV4dD4KPC9zdmc+" alt="Logo Subly+ Marketplace" class="logo">
+            
+            <!-- Botón de Menú Móvil --><button class="toggle-nav-btn" id="toggleNavBtn">☰</button>
+
+            <!-- Información de Contacto (visible en desktop) --><div class="contact-info">
+                <a href="tel:+573183826283" class="contact">Escríbenos: <strong style="color: var(--accent-blue);">+57 3183826283</strong></a>
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.5" y1="6.5" y2="6.5"/></svg></a>
+            </div>
+        </div>
+        
+        <!-- Navegación Principal (Hidden in Mobile by default) --><nav class="main-nav-bar">
+            <ul class="main-nav-links" id="mainNavLinks">
+                <li class="nav-link-item"><a href="#" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Inicio</a></li>
+                <li class="nav-link-item"><a href="#entretenimiento"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clapperboard"><path d="M22 17H2a3 3 0 0 0 0 6h20V17z"/><path d="M2 17V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12H2z"/><line x1="12" y1="13" x2="12" y2="17"/><line x1="6" y1="13" x2="6" y2="17"/><line x1="18" y1="13" x2="18" y2="17"/></svg>Entretenimiento</a></li>
+                <li class="nav-link-item"><a href="#musica"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-music"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Música</a></li>
+                <li class="nav-link-item"><a href="#ia"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain"><path d="M12 5c-.34 0-.67.04-1 .09 2.52 1.22 4 4.01 4 7.91 0 1.5-.47 2.9-1.3 4 1.29.07 2.6-.34 3.47-1.3.4-.4.65-.9.8-1.4.58-2.06-.52-4.2-2.8-5.75-.4-.3-.8-.5-1.2-.7"/><path d="M12 5c.34 0 .67.04 1 .09-2.52 1.22-4 4.01-4 7.91 0 1.5.47 2.9 1.3 4-1.29.07-2.6-.34-3.47-1.3-.4-.4-.65-.9-.8-1.4-.58-2.06.52-4.2 2.8-5.75.4-.3.8-.5 1.2-.7"/><path d="M12 13a4 4 0 0 0 0-8c-.02 0-.05 0-.07 0-2.42.45-4.23 2.5-4.23 4.97A4.25 4.25 0 0 0 12 13zM6 17a4 4 0 0 0 4 4 4 4 0 0 0 4-4"/><path d="M10 19c-.3-.7-1-2-2-2m6 0c.3-.7 1-2 2-2"/></svg>Inteligencia Artificial</a></li>
+                <li class="nav-link-item"><a href="#combos"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package"><path d="M16.5 9.4A2 2 0 0 1 18 10v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-9a2 2 0 0 1 1.5-1.9M2 7h20M7 21v-3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3M12 2v5M12 10v4"/></svg>Combos</a></li>
+                <li class="nav-link-item"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Mi cuenta</a></li>
+                <li class="nav-link-item"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Log Out</a></li>
             </ul>
         </nav>
     </header>
 
-    <div class="content">
-        <!-- ENTRETENIMIENTO -->
-        <h2 class="section-title" id="entretenimiento">🎬 ENTRETENIMIENTO</h2>
-        <div class="products">
-            <!-- Apple TV+ -->
-            <div class="product">
-                <img src="APPLETVMLB-X1MES-T-2-600x600.png">
-                <div class="info">
-                    <h3>Pantalla x1 mes</h3>
-                    <p>Acceso a 1 pantalla</p>
-                    <div class="price">$18.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Apple%20TV%2B%20Pantalla%20x1%20mes" class="buy">Comprar</a>
-                </div>
+    <div class="main-content" id="mainContent">
+        <div class="content-area">
+            <div class="breadcrumb">
+                <span>HOME</span> / <span style="color: var(--accent-blue);">CATÁLOGO SUBLY+</span>
             </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Apple_TV_Plus_Logo.svg" alt="Apple TV+">
-                <div class="info">
-                    <h3>Pantalla x3 meses</h3>
-                    <p>Acceso a 1 pantalla</p>
-                    <div class="price">$79.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Apple%20TV%2B%20Pantalla%20x3%20meses" class="buy">Comprar</a>
+
+            <div class="shop-header">
+                <div class="search-box">
+                    <input type="text" placeholder="Buscar producto o servicio...">
+                    <!-- Search Icon SVG --><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Apple_TV_Plus_Logo.svg" alt="Apple TV+">
-                <div class="info">
-                    <h3>Cuenta completa x1 mes</h3>
-                    <p>Cuenta completa</p>
-                    <div class="price">$20.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Apple%20TV%2B%20Cuenta%20completa%20x1%20mes" class="buy">Comprar</a>
+                <div class="filters">
+                    <select>
+                        <option>Mostrar: Todos</option>
+                        <option>Mostrar: Streaming</option>
+                        <option>Mostrar: Música</option>
+                        <option>Mostrar: IA</option>
+                    </select>
+                    <div class="view-toggle">
+                        <button class="active">
+                            <!-- Grid View Icon SVG --><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-grid"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        </button>
+                        <button>
+                            <!-- List View Icon SVG --><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Paramount+ -->
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Paramount_Plus_logo.svg" alt="Paramount+">
-                <div class="info">
-                    <h3>Pantalla x1 mes</h3>
-                    <div class="price">$10.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Paramount%2B%20Pantalla%20x1%20mes" class="buy">Comprar</a>
+            <!-- Sección: ENTRETENIMIENTO --><h2 class="category-title" id="entretenimiento">🎬 ENTRETENIMIENTO</h2>
+            <div class="product-grid">
+                <!-- Apple TV+ --><div class="product-card">
+                    <div class="image-container brand-bg-appletv">
+                        <!-- Logo Image Placeholder (Apple TV) --><img src="https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B" alt="Logo Apple TV+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Apple TV+: Pantalla</h3>
+                        <p class="description">Acceso a 1 Pantalla de Apple TV+ por 1 mes.</p>
+                        <div class="price">$18.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
                 </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Paramount_Plus_logo.svg" alt="Paramount+">
-                <div class="info">
-                    <h3>Completa x1 mes</h3>
-                    <div class="price">$15.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Paramount%2B%20Completa%20x1%20mes" class="buy">Comprar</a>
+                <div class="product-card">
+                    <div class="image-container brand-bg-appletv">
+                        <img src="https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B" alt="Logo Apple TV+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Apple TV+: Pantalla</h3>
+                        <p class="description">Acceso a 1 Pantalla de Apple TV+ por 3 meses.</p>
+                        <div class="price">$79.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
                 </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Paramount_Plus_logo.svg" alt="Paramount+">
-                <div class="info">
-                    <h3>Original pantalla x1 mes</h3>
-                    <div class="price">$17.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Paramount%2B%20Original%20pantalla%20x1%20mes" class="buy">Comprar</a>
+                <div class="product-card">
+                    <div class="image-container brand-bg-appletv">
+                        <img src="https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B" alt="Logo Apple TV+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/000000/ffffff?text=Apple+TV%2B'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Apple TV+: Completa</h3>
+                        <p class="description">Cuenta completa de Apple TV+ por 1 mes.</p>
+                        <div class="price">$20.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
                 </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Paramount_Plus_logo.svg" alt="Paramount+">
-                <div class="info">
-                    <h3>Original completa x1 mes</h3>
-                    <div class="price">$18.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Paramount%2B%20Original%20completa%20x1%20mes" class="buy">Comprar</a>
+
+                <!-- Paramount+ --><div class="product-card">
+                    <div class="image-container brand-bg-paramount">
+                        <!-- Logo Image Placeholder (Paramount+) --><img src="https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B" alt="Logo Paramount+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Paramount+: Pantalla</h3>
+                        <p class="description">Acceso a 1 Pantalla de Paramount+ por 1 mes.</p>
+                        <div class="price">$10.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container brand-bg-paramount">
+                        <img src="https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B" alt="Logo Paramount+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Paramount+: Completa</h3>
+                        <p class="description">Cuenta completa de Paramount+ por 1 mes.</p>
+                        <div class="price">$15.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container brand-bg-paramount">
+                        <img src="https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B" alt="Logo Paramount+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Paramount+: Original Pantalla</h3>
+                        <p class="description">Pantalla original de Paramount+ por 1 mes.</p>
+                        <div class="price">$17.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container brand-bg-paramount">
+                        <img src="https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B" alt="Logo Paramount+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00329c/ffffff?text=PARAMOUNT%2B'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Paramount+: Original Completa</h3>
+                        <p class="description">Cuenta completa original de Paramount+ por 1 mes.</p>
+                        <div class="price">$18.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+
+                <!-- Crunchyroll --><div class="product-card">
+                    <div class="image-container brand-bg-crunchyroll">
+                        <!-- Logo Image Placeholder (Crunchyroll) --><img src="https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL" alt="Logo Crunchyroll" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Crunchyroll: Pantalla</h3>
+                        <p class="description">Acceso a una Pantalla de Crunchyroll por 1 mes.</p>
+                        <div class="price">$7.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container brand-bg-crunchyroll">
+                        <img src="https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL" alt="Logo Crunchyroll" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Crunchyroll: Completa</h3>
+                        <p class="description">Cuenta completa de Crunchyroll por 1 mes.</p>
+                        <div class="price">$13.500</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container brand-bg-crunchyroll">
+                        <img src="https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL" alt="Logo Crunchyroll" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Crunchyroll: Original Pantalla</h3>
+                        <p class="description">Pantalla original de Crunchyroll por 1 mes.</p>
+                        <div class="price">$11.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container brand-bg-crunchyroll">
+                        <img src="https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL" alt="Logo Crunchyroll" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/f48a06/000000?text=CRUNCHYROLL'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Crunchyroll: Original Completa</h3>
+                        <p class="description">Cuenta completa original de Crunchyroll por 1 mes.</p>
+                        <div class="price">$13.600</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+
+                <!-- Disney+ --><div class="product-card">
+                    <div class="image-container brand-bg-disney">
+                        <!-- Logo Image Placeholder (Disney+) --><img src="https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Disney+: Pantalla Original Estándar</h3>
+                        <p class="description">Pantalla estándar (Original) de Disney+ por 1 mes.</p>
+                        <div class="price">$15.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container brand-bg-disney">
+                        <img src="https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Disney+: Completa Original Estándar</h3>
+                        <p class="description">Cuenta completa estándar (Original) de Disney+ por 1 mes.</p>
+                        <div class="price">$30.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container brand-bg-disney">
+                        <img src="https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Disney+: Pantalla Premium Genérica</h3>
+                        <p class="description">Pantalla Premium (Genérica) de Disney+ por 1 mes.</p>
+                        <div class="price">$20.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container brand-bg-disney">
+                        <img src="https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Disney+: Completa Premium Genérica</h3>
+                        <p class="description">Cuenta completa Premium (Genérica) de Disney+ por 1 mes.</p>
+                        <div class="price">$39.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container brand-bg-disney">
+                        <img src="https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Disney+: Pantalla Premium Original</h3>
+                        <p class="description">Pantalla Premium (Original) de Disney+ por 1 mes.</p>
+                        <div class="price">$45.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container brand-bg-disney">
+                        <img src="https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B" alt="Logo Disney+" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00002f/ffffff?text=DISNEY%2B'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Disney+: Completa Premium Original</h3>
+                        <p class="description">Cuenta completa Premium (Original) de Disney+ por 1 mes.</p>
+                        <div class="price">$46.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Crunchyroll -->
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Crunchyroll_Logo.svg" alt="Crunchyroll">
-                <div class="info">
-                    <h3>Pantalla x1 mes</h3>
-                    <div class="price">$7.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Crunchyroll%20Pantalla%20x1%20mes" class="buy">Comprar</a>
+            <!-- Sección: MÚSICA --><h2 class="category-title" id="musica">🎵 MÚSICA</h2>
+            <div class="product-grid">
+                <!-- YouTube Premium --><div class="product-card">
+                    <div class="image-container brand-bg-youtube">
+                        <!-- Logo Image Placeholder (YouTube Premium) --><img src="https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM" alt="Logo YouTube Premium" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>YouTube Premium: 1 Mes</h3>
+                        <p class="description">Acceso a YouTube Premium por 1 mes.</p>
+                        <div class="price">$10.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
                 </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Crunchyroll_Logo.svg" alt="Crunchyroll">
-                <div class="info">
-                    <h3>Completa x1 mes</h3>
-                    <div class="price">$13.500</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Crunchyroll%20Completa%20x1%20mes" class="buy">Comprar</a>
+                <div class="product-card">
+                    <div class="image-container brand-bg-youtube">
+                        <img src="https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM" alt="Logo YouTube Premium" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>YouTube Premium: 3 Meses</h3>
+                        <p class="description">Acceso a YouTube Premium por 3 meses.</p>
+                        <div class="price">$30.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
                 </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Crunchyroll_Logo.svg" alt="Crunchyroll">
-                <div class="info">
-                    <h3>Original pantalla x1 mes</h3>
-                    <div class="price">$11.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Crunchyroll%20Original%20pantalla%20x1%20mes" class="buy">Comprar</a>
+                <div class="product-card">
+                    <div class="image-container brand-bg-youtube">
+                        <img src="https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM" alt="Logo YouTube Premium" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/ff0000/ffffff?text=YOUTUBE+PREMIUM'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>YouTube Premium: 4 Meses</h3>
+                        <p class="description">Acceso a YouTube Premium por 4 meses.</p>
+                        <div class="price">$66.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
                 </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Crunchyroll_Logo.svg" alt="Crunchyroll">
-                <div class="info">
-                    <h3>Original completa x1 mes</h3>
-                    <div class="price">$13.600</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Crunchyroll%20Original%20completa%20x1%20mes" class="buy">Comprar</a>
+
+                <!-- Deezer Premium --><div class="product-card">
+                    <div class="image-container brand-bg-deezer">
+                        <!-- Logo Image Placeholder (Deezer Premium) --><img src="https://placehold.co/400x160/00c7e2/1a1a1a?text=DEEZER" alt="Logo Deezer Premium" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/00c7e2/1a1a1a?text=DEEZER'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Deezer Premium: 1 Mes</h3>
+                        <p class="description">Acceso a Deezer Premium por 1 mes.</p>
+                        <div class="price">$10.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+
+                <!-- Spotify --><div class="product-card">
+                    <div class="image-container brand-bg-spotify">
+                        <!-- Logo Image Placeholder (Spotify) --><img src="https://placehold.co/400x160/1ed760/000000?text=SPOTIFY" alt="Logo Spotify" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/1ed760/000000?text=SPOTIFY'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Spotify: 1 Mes</h3>
+                        <p class="description">Acceso a Spotify Premium por 1 mes.</p>
+                        <div class="price">$13.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container brand-bg-spotify">
+                        <img src="https://placehold.co/400x160/1ed760/000000?text=SPOTIFY" alt="Logo Spotify" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/1ed760/000000?text=SPOTIFY'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Spotify: 2 Meses</h3>
+                        <p class="description">Acceso a Spotify Premium por 2 meses.</p>
+                        <div class="price">$24.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-container brand-bg-spotify">
+                        <img src="https://placehold.co/400x160/1ed760/000000?text=SPOTIFY" alt="Logo Spotify" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/1ed760/000000?text=SPOTIFY'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Spotify: 3 Meses</h3>
+                        <p class="description">Acceso a Spotify Premium por 3 meses.</p>
+                        <div class="price">$35.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+
+                <!-- Apple Music --><div class="product-card">
+                    <div class="image-container brand-bg-applemusic">
+                        <!-- Logo Image Placeholder (Apple Music) --><img src="https://placehold.co/400x160/fa2139/ffffff?text=Apple+Music" alt="Logo Apple Music" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/fa2139/ffffff?text=Apple+Music'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Apple Music: 1 Mes (Android)</h3>
+                        <p class="description">Membresía Apple Music por 1 mes (solo para Android).</p>
+                        <div class="price">$12.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Disney+ -->
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Disney%2B_logo.svg" alt="Disney+">
-                <div class="info">
-                    <h3>Pantalla original estándar x1 mes</h3>
-                    <div class="price">$15.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Disney%2B%20Pantalla%20original%20est%C3%A1ndar%20x1%20mes" class="buy">Comprar</a>
+            <!-- Sección: INTELIGENCIA ARTIFICIAL --><h2 class="category-title" id="ia">🤖 INTELIGENCIA ARTIFICIAL</h2>
+            <div class="product-grid">
+                <!-- ChatGPT Plus --><div class="product-card">
+                    <div class="image-container brand-bg-chatgpt">
+                        <!-- Logo Image Placeholder (ChatGPT Plus) --><img src="https://placehold.co/400x160/10a37f/ffffff?text=ChatGPT+Plus" alt="Logo ChatGPT Plus" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/10a37f/ffffff?text=ChatGPT+Plus'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>ChatGPT Plus: 1 Mes</h3>
+                        <p class="description">Acceso a la suscripción ChatGPT Plus (1 mes).</p>
+                        <div class="price">$59.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
+                </div>
+
+                <!-- Gemini (Google AI) --><div class="product-card">
+                    <div class="image-container brand-bg-gemini">
+                        <!-- Logo Image Placeholder (Gemini AI) --><img src="https://placehold.co/400x160/1a1a1a/4285F4?text=GEMINI+AI" alt="Logo Gemini AI" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x160/1a1a1a/4285F4?text=GEMINI+AI'; this.classList.remove('brand-logo-img');" />
+                    </div>
+                    <div class="product-info">
+                        <h3>Gemini (Google AI): 1 Mes</h3>
+                        <p class="description">Acceso a la suite de Inteligencia Artificial de Google (1 mes).</p>
+                        <div class="price">$59.000</div>
+                        <button class="action-btn">Comprar</button>
+                    </div>
                 </div>
             </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Disney%2B_logo.svg" alt="Disney+">
-                <div class="info">
-                    <h3>Completa original estándar x1 mes</h3>
-                    <div class="price">$30.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Disney%2B%20Completa%20original%20est%C3%A1ndar%20x1%20mes" class="buy">Comprar</a>
+
+            <!-- Sección: COMBOS SUPER MAX --><h2 class="category-title" id="combos">🎁 COMBOS SUPER MAX</h2>
+            <p style="color: #ff8c00; font-weight: 600; margin-bottom: 15px; font-size: 0.9em;">(Disponibles hasta el 24 de octubre)</p>
+            <div class="product-grid">
+                
+                <!-- HBO Max + Paramount --><div class="product-card">
+                    <span class="combo-label">COMBO 🔥</span>
+                    <div class="image-container brand-bg-combo">
+                           <!-- HBO Max + Paramount (Dual Logo Placeholder) --><img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/92278f/00329c?text=HBO+MAX+%2B+PARAMOUNT" alt="Combo HBO Max + Paramount" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BParamount'; this.classList.remove('brand-logo-img');">
+                    </div>
+                    <div class="product-info">
+                        <h3>HBO Max + Paramount</h3>
+                        <p class="description">Acceso a ambas plataformas por un precio especial.</p>
+                        <div class="price">$17.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- HBO Max + Prime --><div class="product-card">
+                    <span class="combo-label">COMBO 🔥</span>
+                    <div class="image-container brand-bg-combo">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/92278f/00a8e1?text=HBO+MAX+%2B+PRIME" alt="Combo HBO Max + Prime" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BPrime'; this.classList.remove('brand-logo-img');">
+                    </div>
+                    <div class="product-info">
+                        <h3>HBO Max + Prime</h3>
+                        <p class="description">Acceso a HBO Max y Amazon Prime Video.</p>
+                        <div class="price">$17.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- HBO Max + Disney --><div class="product-card">
+                    <span class="combo-label">COMBO 🔥</span>
+                    <div class="image-container brand-bg-combo">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/92278f/02022d?text=HBO+MAX+%2B+DISNEY" alt="Combo HBO Max + Disney" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BDisney'; this.classList.remove('brand-logo-img');">
+                    </div>
+                    <div class="product-info">
+                        <h3>HBO Max + Disney+</h3>
+                        <p class="description">Disfruta de la mejor programación de HBO y Disney.</p>
+                        <div class="price">$17.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- HBO Max + Universal+ --><div class="product-card">
+                    <span class="combo-label">COMBO 🔥</span>
+                    <div class="image-container brand-bg-combo">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/92278f/000000?text=HBO+MAX+%2B+UNIVERSAL%2B" alt="Combo HBO Max + Universal+" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BUniversal'; this.classList.remove('brand-logo-img');">
+                    </div>
+                    <div class="product-info">
+                        <h3>HBO Max + Universal+</h3>
+                        <p class="description">Acceso a HBO Max y el contenido de Universal+.</p>
+                        <div class="price">$18.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- HBO Max + ViX --><div class="product-card">
+                    <span class="combo-label">COMBO 🔥</span>
+                    <div class="image-container brand-bg-combo">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/92278f/ff0070?text=HBO+MAX+%2B+VIX" alt="Combo HBO Max + ViX" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Max%2BViX'; this.classList.remove('brand-logo-img');">
+                    </div>
+                    <div class="product-info">
+                        <h3>HBO Max + ViX</h3>
+                        <p class="description">Acceso a HBO Max y la plataforma de ViX.</p>
+                        <div class="price">$17.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
                 </div>
             </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Disney%2B_logo.svg" alt="Disney+">
-                <div class="info">
-                    <h3>Pantalla premium genérica x1 mes</h3>
-                    <div class="price">$20.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Disney%2B%20Pantalla%20premium%20gen%C3%A9rica%20x1%20mes" class="buy">Comprar</a>
+
+
+            <!-- Sección: COMBOS NETFLIX --><h2 class="category-title">🎃 COMBOS NETFLIX</h2>
+            <p style="color: #e50914; font-weight: 600; margin-bottom: 5px; font-size: 0.9em;">(Acceso general: 1 de noviembre de 2025)</p>
+            <p style="color: var(--dark-muted); margin-bottom: 20px; font-size: 0.8em;">✨ Acceso anticipado si sigues <span style="color: var(--accent-blue);">@Sublymas.co</span></p>
+
+            <div class="product-grid">
+                
+                <!-- Netflix + Crunchyroll --><div class="product-card">
+                    <span class="combo-label">COMBO 🍿</span>
+                    <div class="image-container brand-bg-combo">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/e50914/f48a06?text=NETFLIX+%2B+CRUNCHYROLL" alt="Combo Netflix + Crunchyroll" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Netflix%2BCrunchyroll'; this.classList.remove('brand-logo-img');">
+                    </div>
+                    <div class="product-info">
+                        <h3>Netflix + Crunchyroll</h3>
+                        <p class="description">El mejor cine y series con el mejor anime.</p>
+                        <div class="price">$20.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- Netflix + Prime Video --><div class="product-card">
+                    <span class="combo-label">COMBO 🍿</span>
+                    <div class="image-container brand-bg-combo">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/e50914/00a8e1?text=NETFLIX+%2B+PRIME+VIDEO" alt="Combo Netflix + Prime Video" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Netflix%2BPrime'; this.classList.remove('brand-logo-img');">
+                    </div>
+                    <div class="product-info">
+                        <h3>Netflix + Prime Video</h3>
+                        <p class="description">Doble entretenimiento de las plataformas líderes.</p>
+                        <div class="price">$20.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- Netflix + Disney+ --><div class="product-card">
+                    <span class="combo-label">COMBO 🍿</span>
+                    <div class="image-container brand-bg-combo">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/e50914/02022d?text=NETFLIX+%2B+DISNEY%2B" alt="Combo Netflix + Disney+" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Netflix%2BDisney'; this.classList.remove('brand-logo-img');">
+                    </div>
+                    <div class="product-info">
+                        <h3>Netflix + Disney+</h3>
+                        <p class="description">Acceso a Netflix y todo el catálogo de Disney.</p>
+                        <div class="price">$22.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
+                </div>
+
+                <!-- Netflix + Max (HBO) --><div class="product-card">
+                    <span class="combo-label">COMBO 🍿</span>
+                    <div class="image-container brand-bg-combo">
+                           <img class="brand-logo-img" style="padding: 10px; background: none;" src="https://placehold.co/400x180/e50914/92278f?text=NETFLIX+%2B+MAX+(HBO)" alt="Combo Netflix + Max (HBO)" onerror="this.onerror=null; this.src='https://placehold.co/400x180/333/fff?text=Combo+Netflix%2BMax'; this.classList.remove('brand-logo-img');">
+                    </div>
+                    <div class="product-info">
+                        <h3>Netflix + Max (HBO)</h3>
+                        <p class="description">Lo mejor del cine y las series originales de HBO.</p>
+                        <div class="price">$20.000</div>
+                        <button class="action-btn">Comprar Combo</button>
+                    </div>
                 </div>
             </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Disney%2B_logo.svg" alt="Disney+">
-                <div class="info">
-                    <h3>Completa premium genérica x1 mes</h3>
-                    <div class="price">$39.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Disney%2B%20Completa%20premium%20gen%C3%A9rica%20x1%20mes" class="buy">Comprar</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Disney%2B_logo.svg" alt="Disney+">
-                <div class="info">
-                    <h3>Pantalla premium original x1 mes</h3>
-                    <div class="price">$45.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Disney%2B%20Pantalla%20premium%20original%20x1%20mes" class="buy">Comprar</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Disney%2B_logo.svg" alt="Disney+">
-                <div class="info">
-                    <h3>Completa premium original x1 mes</h3>
-                    <div class="price">$46.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Disney%2B%20Completa%20premium%20original%20x1%20mes" class="buy">Comprar</a>
-                </div>
+            
+            <div style="margin-top: 30px; text-align: center; padding: 15px; border-top: 1px solid #333; color: var(--dark-muted); font-size: 0.85em;">
+                <p>Beneficios: sorteos 🎁, descuentos 💸, acceso anticipado 🚀 y precios exclusivos 🔥</p>
             </div>
         </div>
-
-        <!-- MÚSICA -->
-        <h2 class="section-title" id="musica">🎵 MÚSICA</h2>
-        <div class="products">
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_Premium_logo.svg" alt="YouTube Premium">
-                <div class="info">
-                    <h3>1 mes</h3>
-                    <div class="price">$10.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20YouTube%20Premium%201%20mes" class="buy">Comprar</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_Premium_logo.svg" alt="YouTube Premium">
-                <div class="info">
-                    <h3>3 meses</h3>
-                    <div class="price">$30.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20YouTube%20Premium%203%20meses" class="buy">Comprar</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_Premium_logo.svg" alt="YouTube Premium">
-                <div class="info">
-                    <h3>4 meses</h3>
-                    <div class="price">$66.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20YouTube%20Premium%204%20meses" class="buy">Comprar</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Deezer_logo.svg" alt="Deezer">
-                <div class="info">
-                    <h3>1 mes</h3>
-                    <div class="price">$10.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Deezer%20Premium%201%20mes" class="buy">Comprar</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify">
-                <div class="info">
-                    <h3>1 mes</h3>
-                    <div class="price">$13.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Spotify%201%20mes" class="buy">Comprar</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify">
-                <div class="info">
-                    <h3>2 meses</h3>
-                    <div class="price">$24.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Spotify%202%20meses" class="buy">Comprar</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify">
-                <div class="info">
-                    <h3>3 meses</h3>
-                    <div class="price">$35.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Spotify%203%20meses" class="buy">Comprar</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_Music_logo.svg" alt="Apple Music">
-                <div class="info">
-                    <h3>1 mes (Android)</h3>
-                    <div class="price">$12.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Apple%20Music%201%20mes%20(Android)" class="buy">Comprar</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- IA -->
-        <h2 class="section-title" id="ia">🤖 INTELIGENCIA ARTIFICIAL</h2>
-        <div class="products">
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="ChatGPT Plus">
-                <div class="info">
-                    <h3>ChatGPT Plus</h3>
-                    <div class="price">$59.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20ChatGPT%20Plus%201%20mes" class="buy">Comprar</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Gemini_Logo.svg/1200px-Gemini_Logo.svg.png" alt="Gemini">
-                <div class="info">
-                    <h3>Gemini (Google AI)</h3>
-                    <div class="price">$59.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Gemini%201%20mes" class="buy">Comprar</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- COMBOS -->
-        <h2 class="section-title" id="combos">🎁 COMBOS SUPER MAX</h2>
-        <p style="color: #ff8c00; font-weight: 600; margin-bottom: 20px;">(Disponibles hasta el 24 de octubre)</p>
-        <div class="products">
-            <div class="product">
-                <img src="https://placehold.co/400x120/92278f/ffffff?text=HBO+MAX+%2B+PARAMOUNT" alt="Combo HBO+Paramount">
-                <div class="info">
-                    <h3>HBO Max + Paramount</h3>
-                    <div class="price">$17.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Combo%20HBO%20Max%20%2B%20Paramount" class="buy">Comprar Combo</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://placehold.co/400x120/92278f/ffffff?text=HBO+MAX+%2B+PRIME" alt="Combo HBO+Prime">
-                <div class="info">
-                    <h3>HBO Max + Prime</h3>
-                    <div class="price">$17.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Combo%20HBO%20Max%20%2B%20Prime" class="buy">Comprar Combo</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://placehold.co/400x120/92278f/ffffff?text=HBO+MAX+%2B+DISNEY" alt="Combo HBO+Disney">
-                <div class="info">
-                    <h3>HBO Max + Disney+</h3>
-                    <div class="price">$17.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Combo%20HBO%20Max%20%2B%20Disney%2B" class="buy">Comprar Combo</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://placehold.co/400x120/92278f/ffffff?text=HBO+MAX+%2B+UNIVERSAL%2B" alt="Combo HBO+Universal+">
-                <div class="info">
-                    <h3>HBO Max + Universal+</h3>
-                    <div class="price">$18.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Combo%20HBO%20Max%20%2B%20Universal%2B" class="buy">Comprar Combo</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://placehold.co/400x120/92278f/ff0070?text=HBO+MAX+%2B+VIX" alt="Combo HBO+ViX">
-                <div class="info">
-                    <h3>HBO Max + ViX</h3>
-                    <div class="price">$17.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Combo%20HBO%20Max%20%2B%20ViX" class="buy">Comprar Combo</a>
-                </div>
-            </div>
-        </div>
-
-        <h2 class="section-title">🎃 COMBOS NETFLIX</h2>
-        <p style="color: #e50914; font-weight: 600; margin-bottom: 5px;">(Acceso general: 1 de noviembre de 2025)</p>
-        <p style="color: var(--muted); margin-bottom: 20px;">✨ Acceso anticipado si sigues <span style="color: var(--accent);">@Sublymas.co</span></p>
-        <div class="products">
-            <div class="product">
-                <img src="https://placehold.co/400x120/e50914/ffffff?text=NETFLIX+%2B+CRUNCHYROLL" alt="Netflix + Crunchyroll">
-                <div class="info">
-                    <h3>Netflix + Crunchyroll</h3>
-                    <div class="price">$20.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Combo%20Netflix%20%2B%20Crunchyroll" class="buy">Comprar Combo</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://placehold.co/400x120/e50914/ffffff?text=NETFLIX+%2B+PRIME" alt="Netflix + Prime">
-                <div class="info">
-                    <h3>Netflix + Prime Video</h3>
-                    <div class="price">$20.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Combo%20Netflix%20%2B%20Prime%20Video" class="buy">Comprar Combo</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://placehold.co/400x120/e50914/02022d?text=NETFLIX+%2B+DISNEY%2B" alt="Netflix + Disney+">
-                <div class="info">
-                    <h3>Netflix + Disney+</h3>
-                    <div class="price">$22.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Combo%20Netflix%20%2B%20Disney%2B" class="buy">Comprar Combo</a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="https://placehold.co/400x120/e50914/92278f?text=NETFLIX+%2B+MAX" alt="Netflix + Max">
-                <div class="info">
-                    <h3>Netflix + Max (HBO)</h3>
-                    <div class="price">$20.000</div>
-                    <a href="https://wa.me/573183826283?text=Hola,%20quiero%20comprar%20Combo%20Netflix%20%2B%20Max%20(HBO)" class="buy">Comprar Combo</a>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            <p>Subly+ Marketplace • Todos los productos se gestionan vía WhatsApp</p>
-            <p>📲 +57 318 382 6283</p>
-            <p>Beneficios: sorteos 🎁, descuentos 💸, acceso anticipado 🚀 y precios exclusivos 🔥</p>
-        </footer>
     </div>
+
+    <script>
+        // Lógica para alternar el menú en móviles
+        document.getElementById('toggleNavBtn').addEventListener('click', function() {
+            document.getElementById('mainNavLinks').classList.toggle('active');
+        });
+
+        // Ocultar el menú móvil cuando se hace clic en un enlace de categoría
+        document.querySelectorAll('.main-nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                // Solo si el menú está visible (es decir, estamos en móvil)
+                if (window.innerWidth <= 1024) {
+                    document.getElementById('mainNavLinks').classList.remove('active');
+                }
+            });
+        });
+
+        // Script para resaltar el enlace activo de la navegación horizontal
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.main-nav-links a');
+            
+            function updateActiveLink() {
+                let currentHash = window.location.hash || '#';
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const linkHash = new URL(link.href).hash || '#';
+                    
+                    if (currentHash === linkHash) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            // Actualizar al cargar y al cambiar el hash (si navegan por las categorías)
+            updateActiveLink();
+            window.addEventListener('hashchange', updateActiveLink);
+        });
+    </script>
 </body>
 </html>
